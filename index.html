@@ -256,6 +256,7 @@
 
     .first-bubble {
       max-width: min(310px, 88vw);
+      margin: 0 auto;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -277,6 +278,15 @@
       color: rgba(255, 255, 255, .68);
       line-height: 1.65
     }
+/* ─── FIRST MESSAGE TYPEWRITER ──────────────────────────── */
+#first-msg-text .fm-cursor {
+  display: inline-block;
+  width: 2px; height: .9em;
+  background: rgba(147,197,253,.8);
+  vertical-align: text-bottom;
+  margin-left: 1px;
+  animation: cursorBlink .75s step-end infinite;
+}
 
     .scroll-hint {
       position: absolute;
@@ -1711,7 +1721,51 @@
       }
     }
 
-    .sig {
+    /* ─── HANDWRITTEN LETTER UPGRADE ───────────────────────── */
+#letter-box {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1rem, 2.6vw, 1.22rem);
+  line-height: 2;
+  color: rgba(255, 245, 220, .78);
+  background: rgba(255, 240, 200, .025);
+  border: 1px solid rgba(255, 220, 140, .09);
+  border-radius: 12px;
+  padding: clamp(1.4rem, 4vw, 2.4rem) clamp(1.2rem, 3.5vw, 2rem);
+  max-width: min(680px, 96vw);
+  margin: 0 auto 1.8rem;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+#letter-box::before {
+  content: '';
+  position: absolute;
+  left: clamp(2.2rem, 6vw, 3.5rem);
+  top: 0; bottom: 0; width: 1px;
+  background: rgba(255, 180, 100, .08);
+  pointer-events: none;
+}
+.tw-line {
+  display: block;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity .55s cubic-bezier(.2,1,.2,1),
+              transform .55s cubic-bezier(.2,1,.2,1);
+  margin-bottom: .15em;
+}
+.tw-line.in { opacity: 1; transform: none; }
+.tw-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: rgba(255, 200, 100, .7);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: cursorBlink .75s step-end infinite;
+}
+@keyframes cursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.sig {
       font-family: 'Dancing Script', cursive;
       font-size: clamp(1.6rem, 5vw, 2.2rem);
       color: var(--ac);
@@ -2436,7 +2490,358 @@
         transform: translate(var(--sx), var(--sy)) scale(1.5)
       }
     }
-  </style>
+  
+/* ─── CONSTELLATION MAP ─────────────────────────────────── */
+.const-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  margin: 2rem auto;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(0,0,0,.22);
+  touch-action: none;
+}
+#const-canvas {
+  display: block;
+  width: 100%;
+  cursor: crosshair;
+}
+.const-tip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(8,12,26,.92);
+  border: 1px solid rgba(147,197,253,.22);
+  border-radius: 10px;
+  padding: .55rem .9rem;
+  font-size: clamp(.72rem,1.8vw,.8rem);
+  color: rgba(255,255,255,.82);
+  line-height: 1.55;
+  max-width: min(220px, 58vw);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .22s, transform .22s;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  white-space: normal;
+}
+.const-tip.show { opacity: 1; transform: none; }
+.const-tip strong {
+  display: block;
+  color: var(--ac);
+  font-size: .68rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .25rem;
+}
+
+/* ─── SCENE CUT OVERLAY ─────────────────────────────────── */
+#scene-cut {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  pointer-events: none;
+  z-index: 9960;
+  opacity: 0;
+  transition: opacity .28s ease-in;
+}
+#scene-cut.cut-in  { opacity: .88; transition: opacity .22s ease-in; }
+#scene-cut.cut-out { opacity: 0;   transition: opacity .55s ease-out; }
+
+/* ─── LIVE DAYS TICKER ───────────────────────────────────── */
+.live-ticker {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .35rem;
+  margin-top: .6rem;
+  opacity: 0;
+  animation: fup 1s 1.2s forwards;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  color: var(--ac);
+  text-shadow: 0 0 40px rgba(var(--ac-r),var(--ac-g),var(--ac-b),.3);
+}
+.lt-u {
+  font-size: .6em;
+  font-weight: 400;
+  color: rgba(255,255,255,.3);
+  letter-spacing: .1em;
+}
+.lt-sep {
+  color: rgba(255,255,255,.15);
+  font-size: .75em;
+  font-weight: 300;
+}
+#lt-s {
+  display: inline-block;
+  min-width: 2ch;
+  text-align: center;
+  transition: transform .12s;
+}
+#lt-s.tick { transform: scale(1.15); }
+
+/* ─── WHO SAID IT GAME ───────────────────────────────────── */
+.wsi-counter {
+  font-size: .6rem;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.28);
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+.wsi-quote-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.8rem 1.4rem;
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .4s;
+  margin-bottom: 1.4rem;
+}
+.wsi-quote-box.correct-k { border-color: rgba(147,197,253,.5); box-shadow: 0 0 24px rgba(147,197,253,.1); }
+.wsi-quote-box.correct-h { border-color: rgba(255,180,100,.5); box-shadow: 0 0 24px rgba(255,180,100,.1); }
+.wsi-quote-box.wrong     { border-color: rgba(255,80,80,.4); }
+.wsi-q {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(.88rem,2.4vw,1.05rem);
+  color: rgba(255,255,255,.8);
+  line-height: 1.65;
+  text-align: center;
+}
+.wsi-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.wsi-btn {
+  flex: 1;
+  max-width: 200px;
+  padding: .8rem 1rem;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: .78rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: rgba(255,255,255,.55);
+  transition: all .22s;
+}
+.wsi-btn.wsi-k:hover, .wsi-btn.wsi-k:active {
+  border-color: rgba(147,197,253,.4);
+  color: rgba(147,197,253,.9);
+  background: rgba(147,197,253,.06);
+}
+.wsi-btn.wsi-h:hover, .wsi-btn.wsi-h:active {
+  border-color: rgba(255,180,100,.4);
+  color: rgba(255,180,100,.9);
+  background: rgba(255,180,100,.06);
+}
+.wsi-btn:disabled { opacity: .35; cursor: default; pointer-events: none; }
+.wsi-btn.chosen-correct { opacity: 1; font-weight: 600; }
+.wsi-btn.wsi-k.chosen-correct { border-color:rgba(147,197,253,.7);color:rgba(147,197,253,1);background:rgba(147,197,253,.1); }
+.wsi-btn.wsi-h.chosen-correct { border-color:rgba(255,180,100,.7);color:rgba(255,180,100,1);background:rgba(255,180,100,.1); }
+.wsi-reveal {
+  font-size: .8rem;
+  color: rgba(255,255,255,.38);
+  text-align: center;
+  min-height: 1.4rem;
+  margin-bottom: .8rem;
+  transition: opacity .3s;
+}
+.wsi-next {
+  display: block;
+  margin: .8rem auto 0;
+  padding: .6rem 2rem;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50px;
+  background: transparent;
+  color: rgba(255,255,255,.4);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: .72rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .22s;
+}
+.wsi-next:hover { border-color: rgba(255,255,255,.28); color: rgba(255,255,255,.7); }
+.wsi-score-big {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.5rem, 12vw, 6rem);
+  color: var(--ac);
+  text-shadow: 0 0 60px rgba(var(--ac-r),var(--ac-g),var(--ac-b),.35);
+  text-align: center;
+  line-height: 1;
+  margin-bottom: .6rem;
+}
+.wsi-end-msg {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(.9rem, 2.4vw, 1.1rem);
+  color: rgba(255,255,255,.55);
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* ─── GOOD NIGHT DIMMER ─────────────────────────────────── */
+#goodnight-veil {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  z-index: 9;
+  transition: background 4s cubic-bezier(.4,0,.2,1);
+}
+#goodnight-veil.dim {
+  background: rgba(0,0,0,.62);
+}
+#goodnight-msg {
+  position: fixed;
+  bottom: clamp(3rem, 8svh, 5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2s 2.5s cubic-bezier(.4,0,.2,1);
+  white-space: nowrap;
+}
+#goodnight-msg.show { opacity: 1; }
+.gn-line {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  color: rgba(255,255,255,.45);
+  display: block;
+}
+.gn-sub {
+  font-size: clamp(.52rem, 1.3vw, .6rem);
+  letter-spacing: .4em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.18);
+  margin-top: .4rem;
+  display: block;
+}
+
+.polaroid-img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 1px;
+  display: block;
+  background: rgba(0,0,0,.12);
+}
+.polaroid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center center;
+  transition: transform 5s cubic-bezier(.25,.46,.45,.94);
+  will-change: transform;
+}
+.polaroid:hover .polaroid-img,
+.polaroid:focus-within .polaroid-img {
+  transform: scale(1.09) translate(1.5%, -1%);
+}
+.polaroid.in .polaroid-img {
+  animation: kenBurns 18s ease-in-out infinite alternate;
+}
+@keyframes kenBurns {
+  0%   { transform: scale(1.0) translate(0, 0); }
+  33%  { transform: scale(1.05) translate(1%, -.8%); }
+  66%  { transform: scale(1.04) translate(-1%, .5%); }
+  100% { transform: scale(1.06) translate(.5%, 1%); }
+}
+.polaroid:hover .polaroid-img {
+  animation: none;
+  transform: scale(1.1) translate(1.5%, -1%);
+  transition: transform 1.2s cubic-bezier(.25,.46,.45,.94);
+}
+
+/* ─── CONSTELLATION MODAL ───────────────────────────────── */
+.const-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.68);
+  backdrop-filter: blur(8px);
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s cubic-bezier(.2,1,.2,1);
+}
+.const-modal-overlay.show {
+  opacity: 1; pointer-events: auto;
+}
+.const-modal {
+  width: 90%;
+  max-width: 420px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem 1.4rem 1.4rem;
+  position: relative;
+  transform: translateY(20px) scale(.95);
+  transition: all .4s cubic-bezier(.2,1,.2,1);
+}
+.const-modal-overlay.show .const-modal {
+  transform: none;
+}
+.cm-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: rgba(255,255,255,.4);
+  cursor: pointer;
+  transition: color .2s;
+  padding: 0 8px;
+}
+.cm-close:hover { color: rgba(255,255,255,.9); }
+.cm-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: rgba(255,255,255,.9);
+  margin-bottom: .2rem;
+  text-align: center;
+}
+.cm-sub {
+  font-size: .75rem;
+  color: rgba(147,197,253,.8);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.cm-chat {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: .4rem;
+}
+/* cm-chat scrollbar */
+.cm-chat::-webkit-scrollbar { width: 4px; }
+.cm-chat::-webkit-scrollbar-track { background: rgba(0,0,0,.1); }
+.cm-chat::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 10px; }
+
+</style>
 </head>
 
 <body>
@@ -2469,6 +2874,20 @@
   </div>
   <div id="scene-ctr">Scene <span id="scene-num">01</span></div>
   <div id="cine-flash"></div>
+  <div id="scene-cut"></div>
+  <div class="const-modal-overlay" id="cm-overlay">
+    <div class="const-modal" id="cm-box">
+      <div class="cm-close" id="cm-close">×</div>
+      <div class="cm-title" id="cm-title">Date</div>
+      <div class="cm-sub" id="cm-sub">Subtitle</div>
+      <div class="cm-chat" id="cm-chat"></div>
+    </div>
+  </div>
+  <div id="goodnight-veil"></div>
+  <div id="goodnight-msg">
+    <span class="gn-line">Good night 😴 Byeee 👋</span>
+    <span class="gn-sub">See you tomorrow · Always</span>
+  </div>
   <!-- ╚══════════════════════╝ -->
 
   <audio id="bgm" src="KP_Track.mp3" loop playsinline></audio>
@@ -2481,13 +2900,21 @@
       </div>
       <div class="hero-eye">A Love Story · Nov 2023 → Present</div>
       <h1 class="hero-title" id="hero-title-el">Kishore<br>&amp; <em>Harini</em></h1>
-      <p class="hero-sub">181,320 messages &nbsp;·&nbsp; 808 days &nbsp;·&nbsp; 1 story</p>
-      <div class="first-bubble">
-        <div class="fb-meta">25 November 2023 · 12:25 PM · The Very First Message</div>
-        <div class="fb-text">"Hey! This is Kishore! Air Wedge Experiment Calculation, Neenga Eludhi Correction
-          vaangitiya?" 😅</div>
+      <p class="hero-sub">181,320 messages &nbsp;·&nbsp; <span id="live-days-hero">808d</span> &nbsp;·&nbsp; 1 story</p>
+      <div class="live-ticker" id="live-ticker">
+        <span id="lt-d">808</span><span class="lt-u">d</span>
+        <span class="lt-sep">·</span>
+        <span id="lt-h">00</span><span class="lt-u">h</span>
+        <span class="lt-sep">·</span>
+        <span id="lt-m">00</span><span class="lt-u">m</span>
+        <span class="lt-sep">·</span>
+        <span id="lt-s">00</span><span class="lt-u">s</span>
       </div>
-      <div class="first-bubble" style="margin-top:.75rem;opacity:0;animation:fup 1s 1.7s forwards">
+      <div class="first-bubble" id="first-bubble-main">
+        <div class="fb-meta">25 November 2023 · 12:25 PM · The Very First Message</div>
+        <div class="fb-text" id="first-msg-text"></div>
+      </div>
+      <div class="first-bubble" style="margin: .75rem auto 0 auto; opacity:0; animation:fup 1s 1.7s forwards">
         <div class="fb-meta">25 November 2023 · 12:33 PM · 8 minutes later</div>
         <div class="fb-text">She sent three photos. He said "Thank you ☺️". She replied "Tq 🥰". That was the whole
           thing. That was everything.</div>
@@ -2507,7 +2934,7 @@
         <h2 class="sh">One Month.<br><em>Everything Changed.</em></h2>
         <div class="polaroid" data-src="photo-1.jpg"
           style="float: right; width: 38%; max-width: 220px; margin: 0.5rem 0 1rem 1.5rem; --rot: 4deg; position: relative; z-index: 10;">
-          <img class="polaroid-img" src="photo-1.jpg" alt="Moment 1" loading="lazy" />
+          <div class="polaroid-img-wrap"><img class="polaroid-img" src="photo-1.jpg" alt="Moment 1" loading="lazy" /></div>
           <div class="polaroid-caption">Nov 2023</div>
         </div>
         <div style="margin:2rem 0">
@@ -2573,8 +3000,8 @@
         <div class="tag">Their Comedy Archive</div>
         <h2 class="sh"><em>36,341</em> Laughing Emojis<br>This Is Why</h2>
         <div class="polaroid" data-src="photo-2.jpg"
-          style="float: left; width: 42%; max-width: 200px; margin: 0.5rem 1.5rem 1rem 0; --rot: -3.5deg; position: relative; z-index: 10;">
-          <img class="polaroid-img" src="photo-2.jpg" alt="Moment 2" loading="lazy" />
+          style="position: absolute; right: -5%; top: 100px; width: 38%; max-width: 160px; z-index: 10; --rot: 5.5deg;">
+          <div class="polaroid-img-wrap"><img class="polaroid-img" src="photo-2.jpg" alt="Moment 2" loading="lazy" /></div>
           <div class="polaroid-caption">December ✨</div>
         </div>
         <p class="body">One laugh every 5 messages. These are the exchanges that earned every single one of them.</p>
@@ -3042,7 +3469,7 @@
         <h2 class="sh">Every Morning<br>Begins With <em>Partner</em></h2>
         <div class="polaroid" data-src="photo-3.jpg"
           style="float: right; width: 38%; max-width: 190px; margin: 0.5rem 0 1rem 1.5rem; --rot: 5.2deg; position: relative; z-index: 10;">
-          <img class="polaroid-img" src="photo-3.jpg" alt="Moment 3" loading="lazy" />
+          <div class="polaroid-img-wrap"><img class="polaroid-img" src="photo-3.jpg" alt="Moment 3" loading="lazy" /></div>
           <div class="polaroid-caption">Partner era 💛</div>
         </div>
         <p class="body">864 times. That word. Two syllables that carry the weight of two years. Neither of them planned
@@ -3188,9 +3615,9 @@
       <div class="inner" id="i6">
         <div class="tag">By The Numbers</div>
         <h2 class="sh">What <em>808 Days</em><br>Actually Look Like</h2>
-        <div class="polaroid" data-src="photo-6.jpg"
+        <div class="polaroid" data-src="photo-4.jpg"
           style="float: right; width: 35%; max-width: 180px; margin: 0.5rem 0 1rem 1.5rem; --rot: 2.1deg; position: relative; z-index: 10;">
-          <img class="polaroid-img" src="photo-6.jpg" alt="Moment 6" loading="lazy" />
+          <div class="polaroid-img-wrap"><img class="polaroid-img" src="photo-4.jpg" alt="Moment 6" loading="lazy" /></div>
           <div class="polaroid-caption">808 days 💙</div>
         </div>
         <p class="body">You can't measure a love story in numbers. But you can try. And these numbers are extraordinary.
@@ -3243,7 +3670,7 @@
         <h2 class="sh">How Their Story<br><em>Grew Over Time</em></h2>
         <div class="polaroid" data-src="photo-4.jpg"
           style="float: left; width: 35%; max-width: 180px; margin: 0.5rem 1.5rem 1rem 0; --rot: -2.8deg; position: relative; z-index: 10;">
-          <img class="polaroid-img" src="photo-4.jpg" alt="Moment 4" loading="lazy" />
+          <div class="polaroid-img-wrap"><img class="polaroid-img" src="photo-4.jpg" alt="Moment 4" loading="lazy" /></div>
           <div class="polaroid-caption"> First Photo Together 🌊</div>
         </div>
         <p class="body">Every bar is a month. Every month is a chapter. Watch the spark become a flame.</p>
@@ -3278,6 +3705,20 @@
             <div class="hm-cell" style="background:rgba(147,197,253,.9)"></div>
           </div>
           <span>More</span>
+        </div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ CONSTELLATION · MOMENTS MAP ██ -->
+    <section class="sec" id="s-const">
+      <div class="inner" id="i-const">
+        <div class="tag">The Stars of Your Story</div>
+        <h2 class="sh">Every <em>Key Moment</em><br>Written in the Sky</h2>
+        <p class="body">Each star is a real moment. Tap or hover to remember.</p>
+        <div class="const-wrap" id="const-wrap">
+          <canvas id="const-canvas"></canvas>
+          <div id="const-tooltip" class="const-tip"></div>
         </div>
       </div>
     </section>
@@ -3321,9 +3762,9 @@
       <div class="inner" id="i10">
         <div class="tag">The Language of Us</div>
         <h2 class="sh">Words They Made<br><em>Their Own</em></h2>
-        <div class="polaroid" data-src="photo-5.jpg"
+        <div class="polaroid" data-src="photo-3.jpg"
           style="float: right; width: 40%; max-width: 210px; margin: 0.5rem 0 1rem 1.5rem; --rot: 3.8deg; position: relative; z-index: 10;">
-          <img class="polaroid-img" src="photo-5.jpg" alt="Moment 5" loading="lazy" />
+          <div class="polaroid-img-wrap"><img class="polaroid-img" src="photo-3.jpg" alt="Moment 5" loading="lazy" /></div>
           <div class="polaroid-caption">My bliss 🌤️</div>
         </div>
         <p class="body">These aren't just words. They're their language — built over 808 days of conversation.</p>
@@ -3438,6 +3879,32 @@
               her the pinnacle of honesty. Twice. Because once wasn't enough.</div>
             <div class="qmeta">Kishore · April 11, 2026</div>
           </div>
+        </div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ WHO SAID IT? GAME ██ -->
+    <section class="sec" id="s-wsi">
+      <div class="inner" id="i-wsi" style="max-width:600px">
+        <div class="tag">A Little Game</div>
+        <h2 class="sh">Who Said <em>It?</em></h2>
+        <p class="body" style="margin-bottom:2rem">Six real quotes from your 808 days. One of you said each one. Can you guess who?</p>
+        <div id="wsi-game">
+          <div class="wsi-counter" id="wsi-counter">Round <span id="wsi-round">1</span> of 6</div>
+          <div class="wsi-quote-box" id="wsi-quote-box">
+            <div class="wsi-q" id="wsi-q"></div>
+          </div>
+          <div class="wsi-btns">
+            <button class="wsi-btn wsi-k" id="wsi-btn-k">Kishore</button>
+            <button class="wsi-btn wsi-h" id="wsi-btn-h">Harini</button>
+          </div>
+          <div class="wsi-reveal" id="wsi-reveal"></div>
+          <button class="wsi-next" id="wsi-next" style="display:none">Next →</button>
+        </div>
+        <div class="wsi-end" id="wsi-end" style="display:none">
+          <div class="wsi-score-big" id="wsi-score-big"></div>
+          <div class="wsi-end-msg" id="wsi-end-msg"></div>
         </div>
       </div>
     </section>
@@ -4123,38 +4590,36 @@
     // TYPEWRITER LETTER
     // ═══════════════════════════════════════════════════════
     async function typewriteLetter() {
-      const content = document.getElementById('letter-content');
-      const sig = document.getElementById('letter-sig');
-      if (!content) return;
-      content.innerHTML = '';
-      const cursorEl = document.createElement('span');
-      cursorEl.className = 'tw-cursor'; cursorEl.textContent = '|';
-      content.appendChild(cursorEl);
+  const content = document.getElementById('letter-content');
+  const sig = document.getElementById('letter-sig');
+  if (!content) return;
+  content.innerHTML = '';
 
-      for (let pi = 0; pi < LETTER_PARAS.length; pi++) {
-        const p = document.createElement('p');
-        p.classList.add('tw-done');
-        content.insertBefore(p, cursorEl);
-        if (pi > 0) {
-          const br = document.createElement('br');
-          content.insertBefore(br, p);
-        }
-        const text = LETTER_PARAS[pi];
-        let charIdx = 0;
-        // Type characters
-        while (charIdx < text.length) {
-          p.textContent += text[charIdx];
-          charIdx++;
-          const ch = text[charIdx - 1];
-          const delay = ch === '.' || ch === '—' ? 80 : ch === ',' ? 40 : 14;
-          await sleep(delay);
-        }
-        await sleep(280);
-      }
-      // Remove cursor and show signature
-      cursorEl.remove();
-      await sleep(300);
-      sig.style.opacity = '1';
+  const cursorEl = document.createElement('span');
+  cursorEl.className = 'tw-cursor';
+  content.appendChild(cursorEl);
+
+  for (let pi = 0; pi < LETTER_PARAS.length; pi++) {
+    if (pi > 0) { const sp = document.createElement('span'); sp.style.display='block'; sp.style.height='.6em'; content.insertBefore(sp, cursorEl); }
+    const lineEl = document.createElement('span');
+    lineEl.className = 'tw-line';
+    content.insertBefore(lineEl, cursorEl);
+    await sleep(60);
+    lineEl.classList.add('in');
+    
+    const text = LETTER_PARAS[pi];
+    for (let c = 0; c < text.length; c++) {
+      lineEl.textContent += text[c];
+      const ch = text[c];
+      const delay = (ch === '.' || ch === '—') ? 120 : (ch === ',' ? 60 : 35);
+      await sleep(delay);
+    }
+    await sleep(400);
+  }
+
+  cursorEl.remove();
+  await sleep(400);
+  sig.style.opacity = '1';
       // Small sparkle burst on signature (desktop)
       if (!isMobile()) {
         const sigRect = sig.getBoundingClientRect();
@@ -4288,6 +4753,7 @@
       { section: 's6', eyebrow: 'Chapter Eight', title: 'By The Numbers', date: '181,320 Messages' },
       { section: 's7', eyebrow: 'Chapter Nine', title: 'Growth Chart', date: 'Month by Month' },
       { section: 's8', eyebrow: 'Chapter Ten', title: 'Conversations', date: '808 Days' },
+      { section: 's-const', eyebrow: 'Interlude', title: 'The Constellation', date: 'Every Key Moment' },
       { section: 's9', eyebrow: 'Chapter Eleven', title: 'Who Talks More', date: 'Almost Equal' },
       { section: 's10', eyebrow: 'Chapter Twelve', title: 'Language of Us', date: 'Their Very Own Words' },
       { section: 's11', eyebrow: 'Chapter Thirteen', title: 'After Hours', date: 'Late Night Talks' },
@@ -4538,6 +5004,482 @@
     })();
 
   </script>
+
+
+<script>
+// ═══════════════════════════════════════════════════════
+// FIRST MESSAGE CINEMATIC TYPEWRITER
+// ═══════════════════════════════════════════════════════
+(function() {
+  const FM_TEXT = '"Hey! This is Kishore! Air Wedge Experiment Calculation, Neenga Eludhi Correction vaangitiya?" 😅';
+  const el = document.getElementById('first-msg-text');
+  if (!el) return;
+
+  const cur = document.createElement('span');
+  cur.className = 'fm-cursor';
+  el.appendChild(cur);
+
+  let i = 0;
+  const startDelay = 2000;
+
+  setTimeout(async function typeFirst() {
+    const bubble = document.getElementById('first-bubble-main');
+    if (bubble) { bubble.style.animationDelay = '0s'; bubble.style.opacity = '1'; }
+
+    while (i < FM_TEXT.length) {
+      const rem = FM_TEXT.slice(i);
+      const emojiMatch = rem.match(/^([\p{Emoji_Presentation}\p{Extended_Pictographic}])/u);
+      if (emojiMatch) {
+        const span = document.createTextNode(emojiMatch[0]);
+        el.insertBefore(span, cur);
+        i += emojiMatch[0].length;
+        await sleep(60);
+      } else {
+        el.insertBefore(document.createTextNode(FM_TEXT[i]), cur);
+        i++;
+        const ch = FM_TEXT[i - 1];
+        const d = ch === '?' || ch === '!' ? 110 : ch === ' ' ? 28 : 38;
+        await sleep(d);
+      }
+    }
+    await sleep(900);
+    cur.style.transition = 'opacity .5s';
+    cur.style.opacity = '0';
+    setTimeout(() => cur.remove(), 500);
+  }, startDelay);
+})();
+
+// ═══════════════════════════════════════════════════════
+// CONSTELLATION MAP
+// ═══════════════════════════════════════════════════════
+(function() {
+  const MOMENTS = [
+    { x: .12, y: .18, date: 'Nov 25, 2023', label: 'The first message', sub: '"Air Wedge calculations..."', group: 0 },
+    { x: .28, y: .38, date: 'Dec 2023',     label: '9,764 messages', sub: 'The explosion — 279× in one month', group: 0 },
+    { x: .45, y: .22, date: 'Apr 2024',     label: 'First "Partner"', sub: '"Okay Partner 😂" — half-joking', group: 1 },
+    { x: .62, y: .14, date: 'May 2024',     label: 'Peak month', sub: '16,421 messages — the warmest chapter', group: 1 },
+    { x: .78, y: .3,  date: 'Aug 2024',     label: '"My bliss"', sub: 'Two words. No explanation. 15 times.', group: 1 },
+    { x: .88, y: .55, date: 'Oct 26, 2024', label: 'Kutty Kathai', sub: 'She told her rarest story to him', group: 2 },
+    { x: .72, y: .72, date: 'Nov 3, 2024',  label: 'The Heartbeat', sub: '"Harini Harini nu thudikutham"', group: 2 },
+    { x: .52, y: .82, date: 'Jan 13, 2025', label: 'Inner Voice', sub: '"En aal amaithiya en manasu kulla..."', group: 2 },
+    { x: .35, y: .68, date: 'Jan 26, 2025', label: 'Goa trip', sub: '"Ellame miss pandren"', group: 3 },
+    { x: .18, y: .55, date: 'Nov 2025',     label: '2-year chapter', sub: '7,035 messages — coming back strong', group: 3 },
+    { x: .08, y: .78, date: 'Apr 14, 2026', label: '"Ithuve unaku paadunathu"', sub: 'The song was always for her', group: 3 },
+    { x: .92, y: .82, date: 'Always',       label: 'Still writing', sub: '808 days · 181,320 messages · ∞ reasons', group: 4 },
+  ];
+  const LINES = [ [0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,11],[6,11] ];
+
+  const wrap = document.getElementById('const-wrap');
+  const canvas = document.getElementById('const-canvas');
+  const tip = document.getElementById('const-tooltip');
+  if (!canvas || !wrap || !tip) return;
+
+  const DPR = window.devicePixelRatio || 1;
+  let W, H, active = -1, built = false;
+
+  function resize() {
+    W = wrap.clientWidth;
+    H = Math.round(W * (window.innerWidth < 600 ? .72 : .52));
+    canvas.style.height = H + 'px';
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    draw();
+  }
+
+  const GROUP_COLORS = [
+    [147,197,253], [100,220,160], [248,113,113], [251,146,60], [253,164,175]
+  ];
+
+  function starX(m) { return m.x * W * DPR; }
+  function starY(m) { return m.y * H * DPR; }
+
+  let phase = 0;
+  function draw() {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, W * DPR, H * DPR);
+
+    LINES.forEach(([a, b]) => {
+      const ma = MOMENTS[a], mb = MOMENTS[b];
+      ctx.beginPath(); ctx.moveTo(starX(ma), starY(ma)); ctx.lineTo(starX(mb), starY(mb));
+      ctx.strokeStyle = 'rgba(147,197,253,.09)'; ctx.lineWidth = DPR; ctx.stroke();
+    });
+
+    MOMENTS.forEach((m, i) => {
+      const cx = starX(m), cy = starY(m);
+      const isActive = i === active;
+      const [r,g,b] = GROUP_COLORS[m.group];
+      const pulse = .7 + .3 * Math.sin(phase + i * 0.7);
+
+      if (isActive) {
+        const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 28 * DPR);
+        grd.addColorStop(0, `rgba(${r},${g},${b},.35)`);
+        grd.addColorStop(1, 'transparent');
+        ctx.fillStyle = grd;
+        ctx.beginPath(); ctx.arc(cx, cy, 28 * DPR, 0, Math.PI * 2); ctx.fill();
+      }
+
+      const rad = (isActive ? 5.5 : 3.5) * DPR * pulse;
+      ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${isActive ? .95 : .65})`; ctx.fill();
+
+      if (isActive) {
+        ctx.beginPath(); ctx.arc(cx, cy, 10 * DPR, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${r},${g},${b},.35)`;
+        ctx.lineWidth = DPR; ctx.stroke();
+      }
+
+      if (W > 600 && !isActive) {
+        ctx.fillStyle = `rgba(${r},${g},${b},.45)`;
+        ctx.font = `${9 * DPR}px Josefin Sans, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(m.date, cx, cy - 9 * DPR);
+      }
+    });
+
+    phase += 0.025;
+    requestAnimationFrame(draw);
+  }
+
+  function hitTest(px, py) {
+    for (let i = 0; i < MOMENTS.length; i++) {
+      const m = MOMENTS[i];
+      const dx = (m.x * W) - px, dy = (m.y * H) - py;
+      if (Math.sqrt(dx*dx+dy*dy) < 18) return i;
+    }
+    return -1;
+  }
+
+  function showTip(idx, px, py) {
+    const m = MOMENTS[idx];
+    tip.innerHTML = `<strong>${m.date}</strong>${m.label}<br><span style="color:rgba(255,255,255,.42);font-size:.68em">${m.sub}</span>`;
+    tip.classList.add('show');
+    let tx = px + 16, ty = py - 10;
+    const tw = 220, th = 80;
+    if (tx + tw > W) tx = px - tw - 10;
+    if (ty + th > H) ty = py - th - 10;
+    tip.style.left = Math.max(4, tx) + 'px'; tip.style.top = Math.max(4, ty) + 'px';
+  }
+
+  function hideTip() { tip.classList.remove('show'); }
+
+  canvas.addEventListener('pointermove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const px = e.clientX - rect.left, py = e.clientY - rect.top;
+    const hit = hitTest(px, py);
+    if (hit !== active) { active = hit; if (hit >= 0) showTip(hit, px, py); else hideTip(); }
+    else if (hit >= 0) { tip.style.left = Math.max(4, px+16) + 'px'; tip.style.top = Math.max(4, py-10) + 'px'; }
+  });
+  canvas.addEventListener('pointerleave', () => { active = -1; hideTip(); });
+  canvas.addEventListener('pointerdown', e => {
+    const rect = canvas.getBoundingClientRect();
+    const px = e.clientX - rect.left, py = e.clientY - rect.top;
+    const hit = hitTest(px, py);
+    if (hit >= 0) {
+      active = hit; 
+      hideTip();
+      openConvoModal(hit);
+    } else {
+      active = -1; hideTip();
+    }
+  });
+
+  const MOMENT_CHATS = [
+    [ // 0: Nov 25, 2023 
+      { p: 'k', text: 'Air Wedge Experiment Calculation, Neenga Eludhi Correction vaangitiya?' },
+      { p: 'k', text: 'Jeeva ku Calculation thappa varuthu!' },
+      { p: 'h', text: 'Ahh vangiten' }
+    ],
+    [ // 1: Dec 2023 (9,764 messages)
+      { p: 'k', text: 'Air Wedge, Non uniform lam ungala paathu than eluthirken' },
+      { p: 'h', text: 'Athula crt uh' },
+      { p: 'h', text: 'Simple harmonic dha thappu' }
+    ],
+    [ // 2: Apr 2024 (First Partner)
+      { p: 'k', text: 'Ithan Partnership 🤝' },
+      { p: 'h', text: 'Ohh enna singing partner ahh' },
+      { p: 'k', text: 'Vechukonga Vechukonga 😂' },
+      { p: 'h', text: 'Seringa partner' }
+    ],
+    [ // 3: May 2024 (Peak month)
+      { p: 'k', text: 'Mothalla enna thryum bothu keten' },
+      { p: 'h', text: 'Lab la neega solli kuduthingale apa dha ungala enaku thryum' },
+      { p: 'k', text: 'Antha air wedge ah' },
+      { p: 'h', text: 'Ama' }
+    ],
+    [ // 4: Aug 2024 (My bliss)
+      { p: 'h', text: 'Good morning 🌞' },
+      { p: 'k', text: 'Good morning ✨' },
+      { p: 'h', text: 'My bliss 🩷' }
+    ],
+    [ // 5: Oct 2024 (Kutty Kathai)
+      { p: 'h', text: 'Oru kutty kathai vena sollava' },
+      { p: 'k', text: 'Sollu' },
+      { p: 'h', text: 'Kuruka pesama kekanum' },
+      { p: 'k', text: 'Seri' }
+    ],
+    [ // 6: Nov 2024 (The Heartbeat)
+      { p: 'h', text: 'Dub lub nu thudikuma' },
+      { p: 'k', text: 'Harini Harini nu thudikutham😌' }
+    ],
+    [ // 7: Jan 2025 (Inner voice)
+      { p: 'h', text: 'En aal amaithiya en manasu kulla irukaru avara yen inga ilukura' },
+      { p: 'k', text: 'Na clg la irkra aal ah sonnen' },
+      { p: 'h', text: 'Enaku irukurathe ore aal dhan' }
+    ],
+    [ // 8: Jan 2025 (Goa trip)
+      { p: 'h', text: 'Apdi enna miss panra anga' },
+      { p: 'k', text: 'Ellame miss pandren' },
+      { p: 'k', text: 'Semmaya irunchu thryuma😌' },
+      { p: 'h', text: 'Ahhaaa' },
+      { p: 'k', text: 'Variya polam😉' }
+    ],
+    [ // 9: Nov 2025 (2 year chapter)
+      { p: 'h', text: 'Lab la screw gauge error ketapayum air wedge kitta ninnutu irunthapayum' },
+      { p: 'k', text: '😳😳😳😳😳' },
+      { p: 'k', text: 'Avlo nyabagam irka🤩' }
+    ],
+    [ // 10: Apr 2026 (Ithuve unaku paadunathu)
+      { p: 'h', text: 'Ama enaku epa paada pora' },
+      { p: 'k', text: 'Ithuve unaku paadunathu than' },
+      { p: 'h', text: 'Enaku paaduniya' }
+    ],
+    [ // 11: Always
+      { p: 'k', text: 'Good night ✨' },
+      { p: 'k', text: 'Byee 👋' }
+    ]
+  ];
+
+  const cmOverlay = document.getElementById('cm-overlay');
+  const cmChat = document.getElementById('cm-chat');
+  
+  function openConvoModal(idx) {
+    if (!cmOverlay || !cmChat) return;
+    const m = MOMENTS[idx];
+    const msgs = MOMENT_CHATS[idx];
+    document.getElementById('cm-title').textContent = m.date;
+    document.getElementById('cm-sub').textContent = m.label;
+    
+    cmChat.innerHTML = '';
+    msgs.forEach((msg, i) => {
+      const row = document.createElement('div');
+      row.className = 'row ' + msg.p;
+      if (msg.p === 'k') row.style.justifyContent = 'flex-end';
+      
+      const col = document.createElement('div');
+      
+      const bname = document.createElement('div');
+      bname.className = 'bname';
+      bname.textContent = msg.p === 'k' ? 'Kishore' : 'Harini';
+      if (msg.p === 'k') { bname.classList.add('r'); }
+      
+      const bub = document.createElement('div');
+      bub.className = 'bubble b' + msg.p;
+      bub.textContent = msg.text;
+      if (msg.p === 'k') { bub.style.borderBottomRightRadius = '4px'; }
+      else { bub.style.borderBottomLeftRadius = '4px'; }
+      
+      // Delay entrance animation slightly per bubble
+      row.style.opacity = '0';
+      row.style.animation = `fup 0.6s ${0.2 + i * 0.1}s forwards cubic-bezier(.2,1,.3,1)`;
+      
+      if (i === 0 || msgs[i-1].p !== msg.p) col.appendChild(bname);
+      col.appendChild(bub);
+      row.appendChild(col);
+      cmChat.appendChild(row);
+    });
+    
+    cmOverlay.classList.add('show');
+  }
+
+  const cmClose = document.getElementById('cm-close');
+  if (cmClose) cmClose.addEventListener('click', () => { cmOverlay.classList.remove('show'); });
+  if (cmOverlay) cmOverlay.addEventListener('click', (e) => {
+    if (e.target === cmOverlay) cmOverlay.classList.remove('show');
+  });
+
+  const constIO = new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting || built) return;
+    built = true; resize(); window.addEventListener('resize', resize);
+  }, { threshold: .15 });
+  const constSec = document.getElementById('s-const');
+  if (constSec) constIO.observe(constSec);
+
+  const constInner = document.getElementById('i-const');
+  if (constInner && typeof io !== 'undefined') io.observe(constInner);
+})();
+
+// ═══════════════════════════════════════════════════════
+// SCENE CUT (fade-to-black on dramatic sections)
+// ═══════════════════════════════════════════════════════
+(function() {
+  const CUT_SECTIONS = ['s4', 's5b', 's3c', 's13'];
+  const cutEl = document.getElementById('scene-cut');
+  if (!cutEl) return;
+  const cutDone = new Set();
+  const cutIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting || cutDone.has(e.target.id)) return;
+      cutDone.add(e.target.id);
+      cutEl.classList.remove('cut-out'); cutEl.classList.add('cut-in');
+      setTimeout(() => { cutEl.classList.remove('cut-in'); cutEl.classList.add('cut-out'); }, 340);
+    });
+  }, { threshold: .35 });
+  CUT_SECTIONS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) cutIO.observe(el);
+  });
+})();
+
+// ═══════════════════════════════════════════════════════
+// LIVE DAYS + TIME COUNTER (Hero)
+// ═══════════════════════════════════════════════════════
+(function() {
+  const START = new Date('2023-11-25T12:25:00+05:30');
+  const dEl = document.getElementById('lt-d');
+  const hEl = document.getElementById('lt-h');
+  const mEl = document.getElementById('lt-m');
+  const sEl = document.getElementById('lt-s');
+  if (!dEl) return;
+  function pad(n) { return String(n).padStart(2,'0'); }
+  let prevSec = -1;
+  function tick() {
+    const diff = new Date() - START;
+    const totalSec = Math.floor(diff / 1000);
+    const s = totalSec % 60, m = Math.floor(totalSec / 60) % 60;
+    const h = Math.floor(totalSec / 3600) % 24, d = Math.floor(totalSec / 86400);
+    dEl.textContent = d.toLocaleString();
+    if (hEl) hEl.textContent = pad(h);
+    if (mEl) mEl.textContent = pad(m);
+    if (sEl) {
+      sEl.textContent = pad(s);
+      if (s !== prevSec) {
+        sEl.classList.remove('tick'); void sEl.offsetWidth;
+        sEl.classList.add('tick'); setTimeout(() => sEl.classList.remove('tick'), 120);
+        prevSec = s;
+      }
+    }
+  }
+  tick(); setInterval(tick, 1000);
+})();
+
+// ═══════════════════════════════════════════════════════
+// GOOD NIGHT MOMENT (end of page)
+// ═══════════════════════════════════════════════════════
+(function() {
+  const veil = document.getElementById('goodnight-veil');
+  const msg  = document.getElementById('goodnight-msg');
+  if (!veil || !msg) return;
+  let gnTriggered = false;
+  const gnIO = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !gnTriggered) {
+      gnTriggered = true;
+      setTimeout(() => { veil.classList.add('dim'); msg.classList.add('show'); }, 3800);
+    }
+    if (!entries[0].isIntersecting && gnTriggered) {
+      veil.classList.remove('dim'); msg.classList.remove('show');
+      gnTriggered = false;
+    }
+  }, { threshold: .5 });
+  const finale = document.getElementById('s13');
+  if (finale) gnIO.observe(finale);
+})();
+
+// ═══════════════════════════════════════════════════════
+// WHO SAID IT? MINI-GAME
+// ═══════════════════════════════════════════════════════
+(function() {
+  const QUOTES = [
+    { q: '"Harini Harini nu thudikutham"', answer: 'k', note: 'Nov 3, 2024 · His heartbeat.' },
+    { q: '"My bliss"', answer: 'h', note: 'Aug–Dec 2024 · Said at least 15 times. Never explained.' },
+    { q: '"Na solravan, unakaaga ratham sindhi kooda eluthuvan"', answer: 'k', note: 'Nov 3, 2024 · Meant it sincerely. Also hilarious.' },
+    { q: '"En aal amaithiya en manasu kulla irukaru — avara yen inga ilukura"', answer: 'h', note: 'Jan 13, 2025 · Said to herself. Not to him.' },
+    { q: '"Chaaa proud ah feel pandren 😌 Nermai yin sigaram!"', answer: 'k', note: 'Apr 11, 2026 · She wrote honestly. He was proud immediately.' },
+    { q: '"Nee nalla paiyan nu — athulam theriyum"', answer: 'h', note: 'Apr 2026 · She said it like it wasn\'t even a question.' },
+  ];
+  const END_MSGS = [
+    ['0 / 6', '"Paathukalam." You\'ll get them next time. 😄'],
+    ['1–2 / 6', 'You know the big ones at least! Re-read the story. 💙'],
+    ['3–4 / 6', 'Not bad! You clearly paid attention. 😊'],
+    ['5 / 6', 'So close! You know each other very well. 💛'],
+    ['6 / 6', 'Perfect score. You know each other by heart. Of course you do. 💙💛'],
+  ];
+
+  let current = 0, score = 0;
+  const qEl = document.getElementById('wsi-q');
+  const revEl = document.getElementById('wsi-reveal');
+  const nextBtn = document.getElementById('wsi-next');
+  const roundEl = document.getElementById('wsi-round');
+  const gameEl = document.getElementById('wsi-game');
+  const endEl = document.getElementById('wsi-end');
+  const scoreEl = document.getElementById('wsi-score-big');
+  const endMsgEl = document.getElementById('wsi-end-msg');
+  const boxEl = document.getElementById('wsi-quote-box');
+  const btnK = document.getElementById('wsi-btn-k');
+  const btnH = document.getElementById('wsi-btn-h');
+
+  if (!qEl || !btnK) return;
+
+  function loadRound() {
+    const q = QUOTES[current];
+    qEl.textContent = q.q; revEl.textContent = ''; boxEl.className = 'wsi-quote-box';
+    btnK.className = 'wsi-btn wsi-k'; btnH.className = 'wsi-btn wsi-h';
+    btnK.disabled = false; btnH.disabled = false; nextBtn.style.display = 'none';
+    if (roundEl) roundEl.textContent = current + 1;
+  }
+
+  function guess(choice) {
+    const q = QUOTES[current];
+    btnK.disabled = true; btnH.disabled = true;
+    if (choice === q.answer) {
+      score++; boxEl.classList.add(choice === 'k' ? 'correct-k' : 'correct-h');
+      const btn = choice === 'k' ? btnK : btnH; btn.classList.add('chosen-correct');
+      revEl.textContent = '✓ Correct! ' + q.note; revEl.style.color = 'rgba(147,220,147,.7)';
+    } else {
+      boxEl.classList.add('wrong');
+      revEl.textContent = '✗ It was ' + (q.answer === 'k' ? 'Kishore' : 'Harini') + '. ' + q.note;
+      revEl.style.color = 'rgba(255,120,120,.6)';
+      const correctBtn = q.answer === 'k' ? btnK : btnH;
+      correctBtn.classList.add('chosen-correct'); correctBtn.disabled = false;
+    }
+    nextBtn.style.display = 'block';
+  }
+
+  function nextRound() {
+    current++;
+    if (current >= QUOTES.length) {
+      gameEl.style.display = 'none'; endEl.style.display = 'block';
+      scoreEl.textContent = score + ' / ' + QUOTES.length;
+      let msg = END_MSGS[0][1];
+      if (score >= 6) msg = END_MSGS[4][1];
+      else if (score >= 5) msg = END_MSGS[3][1];
+      else if (score >= 3) msg = END_MSGS[2][1];
+      else if (score >= 1) msg = END_MSGS[1][1];
+      endMsgEl.textContent = msg;
+    } else {
+      loadRound();
+    }
+  }
+
+  btnK.addEventListener('click', () => guess('k'));
+  btnH.addEventListener('click', () => guess('h'));
+  nextBtn.addEventListener('click', nextRound);
+
+  const wsiIO = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) loadRound();
+  }, { threshold: .3, once: true });
+  
+  let wsiLoaded = false;
+  const wsiIO2 = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !wsiLoaded) { wsiLoaded = true; loadRound(); }
+  }, { threshold: .3 });
+  const wsiSec = document.getElementById('s-wsi');
+  if (wsiSec) wsiIO2.observe(wsiSec);
+
+  const wsiInner = document.getElementById('i-wsi');
+  if (wsiInner && typeof io !== 'undefined') io.observe(wsiInner);
+})();
+
+</script>
 </body>
 
 </html>
