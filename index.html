@@ -2195,7 +2195,7 @@
   <div id="cine-flash"></div>
   <!-- ╚══════════════════════╝ -->
 
-  <audio id="bgm" src="KP_Track.mp3" loop preload="auto"></audio>
+  <<audio id="bgm" src="KP_Track.mp3" loop playsinline></audio>
 
   <div class="wrap" id="wrap">
 
@@ -4013,6 +4013,20 @@
       // (chaptersDoneSt is populated when sections are scrolled to)
     })();
 
+    const launchScreen = document.getElementById("launch-screen");
+const bgm = document.getElementById("bgm");
+
+function startExperience() {
+  // play audio
+  bgm.play().catch(e => console.log("Audio blocked:", e));
+
+  // hide launch screen smoothly
+  launchScreen.classList.add("hidden");
+}
+
+// IMPORTANT: mobile needs touchstart
+launchScreen.addEventListener("touchstart", startExperience, { once: true });
+launchScreen.addEventListener("click", startExperience, { once: true });
 
 
   </script>
