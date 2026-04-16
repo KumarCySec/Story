@@ -3421,12 +3421,11 @@
           vol += .05;
           if (vol >= .4) { bgm.volume = .4; clearInterval(fade) } else { bgm.volume = vol }
         }, 200);
-      }).catch(() => { });
+      }).catch((e) => { console.log("Audio skipped", e); });
     }
     const lsInit = document.getElementById('launch-screen');
     if (lsInit) {
       lsInit.addEventListener('click', startAudio, { once: true });
-      lsInit.addEventListener('touchstart', startAudio, { once: true, passive: true });
     }
     function playSound() { }
 
@@ -4015,19 +4014,6 @@
       // (chaptersDoneSt is populated when sections are scrolled to)
     })();
 
-    const launchScreen = document.getElementById("launch-screen");
-
-    function startExperience() {
-      // play audio
-      bgm.play().catch(e => console.log("Audio blocked:", e));
-
-      // hide launch screen smoothly
-      launchScreen.classList.add("hidden");
-    }
-
-    // IMPORTANT: mobile needs touchstart
-    launchScreen.addEventListener("touchstart", startExperience, { once: true });
-    launchScreen.addEventListener("click", startExperience, { once: true });
 
 
   </script>
