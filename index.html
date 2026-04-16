@@ -1,0 +1,4036 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Kishore & Harini — Our Story v5</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:wght@300;400;600&family=Dancing+Script:wght@600;700&family=Outfit:wght@300;400;700;900&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ─── TOKENS ───────────────────────────────────────── */
+    :root {
+      --bg: #080c1a;
+      --bg2: #0c1020;
+      --ac: #93c5fd;
+      --ac-r: 147;
+      --ac-g: 197;
+      --ac-b: 253;
+      --txt: rgba(220, 215, 240, .82);
+      --dim: rgba(255, 255, 255, .3);
+      --card: rgba(255, 255, 255, .028);
+      --border: rgba(255, 255, 255, .07);
+      --r: 16px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow: hidden;
+      width: 100vw;
+      max-width: 100%
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--txt);
+      font-family: 'Josefin Sans', sans-serif;
+      overflow: hidden;
+      width: 100%;
+      max-width: 100%;
+      transition: background .5s;
+      cursor: none
+    }
+
+    @media(hover:none) {
+      body {
+        cursor: auto
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 3px
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .3);
+      border-radius: 2px
+    }
+
+    /* ─── CUSTOM CURSOR ─────────────────────────────────── */
+    #cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .6);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+      transition: transform .1s, background .3s, width .2s, height .2s
+    }
+
+    #cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--ac-r), var(--ac-g), var(--ac-b), .3);
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform .18s ease-out
+    }
+
+    #sparkle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9997
+    }
+
+    @media(hover:none) {
+
+      #cursor,
+      #cursor-ring,
+      #sparkle-canvas {
+        display: none
+      }
+    }
+
+    /* ─── PROGRESS ──────────────────────────────────────── */
+    #prog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--ac);
+      box-shadow: 0 0 14px var(--ac);
+      z-index: 300;
+      transition: width .08s
+    }
+
+    /* ─── SOUND BTN REMOVED ─────────────────────────────── */
+
+    /* ─── STARFIELD ─────────────────────────────────────── */
+    #stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none
+    }
+
+    /* ─── NAV DOTS ──────────────────────────────────────── */
+    .ndots {
+      position: fixed;
+      right: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 200
+    }
+
+    .nd {
+      position: relative;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .12);
+      cursor: pointer;
+      transition: all .3s;
+      border: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .nd.on {
+      background: var(--ac);
+      transform: scale(1.7);
+      box-shadow: 0 0 8px var(--ac)
+    }
+
+    .nd-tip {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(8, 12, 26, .92);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 6px;
+      padding: .25rem .65rem;
+      font-size: .58rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .5);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+      backdrop-filter: blur(8px)
+    }
+
+    .nd:hover .nd-tip {
+      opacity: 1
+    }
+
+    @media(max-width:640px) {
+      .ndots {
+        display: none
+      }
+    }
+
+    /* ─── CONTENT ───────────────────────────────────────── */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%
+    }
+
+    /* ─── HERO ──────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      overflow: hidden;
+      position: relative
+    }
+
+    .hero-eye {
+      font-size: clamp(.55rem, .9vw, .65rem);
+      letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--ac);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fup 1s .3s forwards
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 10vw, 8.5rem);
+      line-height: 1.05;
+      color: #fff;
+      text-shadow: 0 0 100px rgba(var(--ac-r), var(--ac-g), var(--ac-b), .3);
+      margin-bottom: .6rem;
+      opacity: 0;
+      animation: fup 1s .6s forwards
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--ac)
+    }
+
+    .hero-sub {
+      font-size: clamp(.58rem, .8vw, .68rem);
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .28);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fup 1s .9s forwards
+    }
+
+    .first-bubble {
+      max-width: min(310px, 88vw);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.2rem 1.4rem;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      animation: fup 1s 1.3s forwards
+    }
+
+    .fb-meta {
+      font-size: .6rem;
+      letter-spacing: .1em;
+      color: rgba(255, 255, 255, .25);
+      margin-bottom: .5rem
+    }
+
+    .fb-text {
+      font-size: .88rem;
+      color: rgba(255, 255, 255, .68);
+      line-height: 1.65
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      opacity: 0;
+      animation: fin 1s 2s forwards
+    }
+
+    .scroll-hint span {
+      font-size: .58rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .3)
+    }
+
+    .sh-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, .3), transparent);
+      animation: pulseV 2s infinite
+    }
+
+    /* ─── GENERIC SECTION ───────────────────────────────── */
+    .sec {
+      padding: clamp(3.5rem, 7vw, 5rem) clamp(1rem, 4vw, 2rem);
+      position: relative;
+      overflow: hidden
+    }
+
+    .inner {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(55px) scale(.97);
+      filter: blur(14px);
+      transition: opacity 1.5s cubic-bezier(.2, 1, .2, 1), transform 1.5s cubic-bezier(.2, 1, .2, 1), filter 1.5s cubic-bezier(.2, 1, .2, 1)
+    }
+
+    .inner.show {
+      opacity: 1;
+      transform: none;
+      filter: blur(0)
+    }
+
+    .tag {
+      font-size: .6rem;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--ac);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .8rem;
+      margin-bottom: 1rem
+    }
+
+    .tag::before,
+    .tag::after {
+      content: '';
+      width: 36px;
+      height: 1px;
+      background: var(--ac);
+      opacity: .3
+    }
+
+    h2.sh {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 5vw, 3.8rem);
+      line-height: 1.18;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 1rem
+    }
+
+    h2.sh em {
+      font-style: italic;
+      color: var(--ac)
+    }
+
+    .body {
+      font-size: clamp(.84rem, 2vw, .92rem);
+      line-height: 1.95;
+      color: rgba(255, 255, 255, .42);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 2rem
+    }
+
+    .sep {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, .06), transparent);
+      margin: 0 5%
+    }
+
+    .div {
+      width: 48px;
+      height: 1px;
+      background: var(--ac);
+      opacity: .2;
+      margin: 1.5rem auto
+    }
+
+    @keyframes flarePulse {
+
+      0%,
+      100% {
+        opacity: .6;
+        filter: blur(80px)
+      }
+
+      50% {
+        opacity: 1;
+        filter: blur(110px)
+      }
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: flarePulse 10s ease-in-out infinite alternate
+    }
+
+    .yr {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(6rem, 15vw, 12rem);
+      font-weight: 700;
+      color: rgba(255, 255, 255, .022);
+      pointer-events: none;
+      user-select: none;
+      right: -1rem;
+      top: 50%;
+      transform: translateY(-50%)
+    }
+
+    /* ─── CHAT BUBBLES ──────────────────────────────────── */
+    .chat {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+      max-width: min(380px, 94vw);
+      width: 100%;
+      margin: 1.8rem auto
+    }
+
+    .row {
+      display: flex;
+      align-items: flex-end;
+      gap: .45rem;
+      transition: opacity .3s, transform .3s
+    }
+
+    .row.k {
+      justify-content: flex-end
+    }
+
+    .bname {
+      font-size: .56rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ac);
+      margin-bottom: .2rem
+    }
+
+    .bname.r {
+      text-align: right
+    }
+
+    .bubble {
+      max-width: 82%;
+      padding: .65rem .95rem;
+      border-radius: 14px;
+      font-size: clamp(.82rem, 2.2vw, .86rem);
+      line-height: 1.55
+    }
+
+    .bk {
+      background: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .14);
+      border: 1px solid rgba(var(--ac-r), var(--ac-g), var(--ac-b), .25);
+      color: #fff;
+      border-bottom-right-radius: 3px
+    }
+
+    .bh {
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: rgba(255, 255, 255, .78);
+      border-bottom-left-radius: 3px
+    }
+
+    .btime {
+      font-size: .57rem;
+      color: rgba(255, 255, 255, .22);
+      margin-top: .18rem
+    }
+
+    .btime.r {
+      text-align: right
+    }
+
+    /* ─── TYPING INDICATOR ──────────────────────────────── */
+    .typing-ind {
+      display: flex;
+      align-items: flex-end;
+      gap: .45rem;
+      animation: fup .2s ease forwards
+    }
+
+    .typing-ind.right {
+      justify-content: flex-end
+    }
+
+    .typing-ind.left {
+      justify-content: flex-start
+    }
+
+    .typing-dots {
+      padding: .55rem .8rem;
+      border-radius: 14px;
+      display: flex;
+      gap: 5px;
+      align-items: center
+    }
+
+    .typing-ind.right .typing-dots {
+      background: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .14);
+      border: 1px solid rgba(var(--ac-r), var(--ac-g), var(--ac-b), .25);
+      border-bottom-right-radius: 3px
+    }
+
+    .typing-ind.left .typing-dots {
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-bottom-left-radius: 3px
+    }
+
+    .typing-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .4);
+      animation: typingDot .8s infinite
+    }
+
+    .typing-dots span:nth-child(2) {
+      animation-delay: .15s
+    }
+
+    .typing-dots span:nth-child(3) {
+      animation-delay: .3s
+    }
+
+    @keyframes typingDot {
+
+      0%,
+      60%,
+      100% {
+        opacity: .4;
+        transform: translateY(0)
+      }
+
+      30% {
+        opacity: 1;
+        transform: translateY(-4px)
+      }
+    }
+
+    /* ─── EXPLOSION ─────────────────────────────────────── */
+    .explosion {
+      min-height: 90svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem clamp(1rem, 4vw, 2rem);
+      text-align: center
+    }
+
+    .exp-inner {
+      max-width: 800px;
+      width: 100%
+    }
+
+    .big-num {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(6rem, 20vw, 16rem);
+      line-height: .9;
+      color: var(--ac);
+      text-shadow: 0 0 120px rgba(var(--ac-r), var(--ac-g), var(--ac-b), .5);
+      position: relative;
+      display: inline-block
+    }
+
+    .big-num::after {
+      content: '×';
+      font-size: .35em;
+      position: absolute;
+      top: .2em;
+      right: -.4em;
+      color: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .6)
+    }
+
+    .exp-label {
+      font-size: clamp(.62rem, 1.5vw, .7rem);
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .35);
+      margin-top: .5rem;
+      margin-bottom: 2rem
+    }
+
+    .exp-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem
+    }
+
+    .exp-pill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: .55rem 1.2rem;
+      font-size: clamp(.72rem, 1.8vw, .8rem);
+      color: rgba(255, 255, 255, .45)
+    }
+
+    .exp-pill strong {
+      color: var(--ac);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700
+    }
+
+    .arr {
+      font-size: 1.2rem;
+      color: var(--ac);
+      opacity: .5
+    }
+
+    /* ─── JOKES ─────────────────────────────────────────── */
+    .jokes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: 1.25rem;
+      margin-top: 2.5rem
+    }
+
+    .joke {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.4rem 1.2rem;
+      transition: border-color .3s, transform .3s;
+      position: relative;
+      overflow: hidden
+    }
+
+    .joke:active,
+    .joke:hover {
+      border-color: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .35);
+      transform: translateY(-4px)
+    }
+
+    .joke::before {
+      content: attr(data-num);
+      position: absolute;
+      top: -12px;
+      right: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 4.5rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, .04);
+      pointer-events: none;
+      line-height: 1
+    }
+
+    .joke-title {
+      font-size: .6rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--ac);
+      margin-bottom: .8rem
+    }
+
+    .joke-chat {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem
+    }
+
+    .joke-chat .bubble {
+      max-width: 90%;
+      font-size: .82rem
+    }
+
+    .joke-punch {
+      font-size: .68rem;
+      color: rgba(255, 255, 255, .28);
+      margin-top: .8rem;
+      font-style: italic;
+      border-top: 1px solid rgba(255, 255, 255, .06);
+      padding-top: .6rem
+    }
+
+    /* ─── TIMELINE ──────────────────────────────────────── */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 2.5rem;
+      margin-top: 2.5rem
+    }
+
+    .tl-line {
+      position: absolute;
+      left: 10px;
+      top: 0;
+      width: 1px;
+      height: 0;
+      background: linear-gradient(to bottom, rgba(var(--ac-r), var(--ac-g), var(--ac-b), .5), rgba(var(--ac-r), var(--ac-g), var(--ac-b), .2));
+      transition: height .05s linear;
+      box-shadow: 0 0 6px rgba(var(--ac-r), var(--ac-g), var(--ac-b), .3)
+    }
+
+    .tnode {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 2rem;
+      position: relative;
+      opacity: 0;
+      transform: translateX(-10px) scale(.97);
+      transition: opacity .5s, transform .5s
+    }
+
+    .tnode.tl-in {
+      opacity: 1;
+      transform: none
+    }
+
+    .tnode::before {
+      content: '';
+      position: absolute;
+      left: -2.1rem;
+      top: .3rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--ac);
+      transition: background .3s, box-shadow .3s, transform .3s
+    }
+
+    .tnode.tl-in::before {
+      transform: scale(1)
+    }
+
+    .tnode.big::before {
+      background: var(--ac);
+      box-shadow: 0 0 20px var(--ac);
+      width: 14px;
+      height: 14px;
+      left: -2.3rem
+    }
+
+    .tnode.big.tl-in::before {
+      animation: nodeGlow 2s ease-out forwards .5s
+    }
+
+    @keyframes nodeGlow {
+      0% {
+        box-shadow: 0 0 20px var(--ac)
+      }
+
+      50% {
+        box-shadow: 0 0 50px var(--ac), 0 0 100px rgba(var(--ac-r), var(--ac-g), var(--ac-b), .4)
+      }
+
+      100% {
+        box-shadow: 0 0 20px var(--ac)
+      }
+    }
+
+    .tdate {
+      font-size: clamp(.56rem, 1.4vw, .6rem);
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .55);
+      margin-bottom: .3rem
+    }
+
+    .ttitle {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(.95rem, 2.2vw, 1.1rem);
+      color: #fff;
+      margin-bottom: .25rem
+    }
+
+    .tdesc {
+      font-size: clamp(.75rem, 1.8vw, .8rem);
+      color: rgba(255, 255, 255, .38);
+      line-height: 1.7
+    }
+
+    .tnode.big .ttitle {
+      font-size: clamp(1.1rem, 2.8vw, 1.35rem);
+      color: var(--ac)
+    }
+
+    @media(max-width:600px) {
+      .timeline {
+        padding-left: 1.8rem
+      }
+
+      .tnode::before {
+        left: -1.8rem
+      }
+
+      .tnode.big::before {
+        left: -2rem
+      }
+    }
+
+    /* ─── CONFESSION ────────────────────────────────────── */
+    .confession {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem);
+      position: relative;
+      overflow: hidden
+    }
+
+    .hb {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 80, 100, .15);
+      animation: hbpulse 2.8s ease-out infinite;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%)
+    }
+
+    .hb:nth-child(1) {
+      width: min(160px, 40vw);
+      height: min(160px, 40vw);
+      animation-delay: 0s
+    }
+
+    .hb:nth-child(2) {
+      width: min(320px, 70vw);
+      height: min(320px, 70vw);
+      animation-delay: .7s
+    }
+
+    .hb:nth-child(3) {
+      width: min(520px, 95vw);
+      height: min(520px, 95vw);
+      animation-delay: 1.4s
+    }
+
+    .hb:nth-child(4) {
+      width: min(740px, 120vw);
+      height: min(740px, 120vw);
+      animation-delay: 2.1s
+    }
+
+    @keyframes hbpulse {
+      0% {
+        opacity: .5;
+        transform: translate(-50%, -50%) scale(.65)
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.3)
+      }
+    }
+
+    .conf {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: min(720px, 96vw)
+    }
+
+    .conf-countdown {
+      position: relative;
+      z-index: 2;
+      text-align: center
+    }
+
+    .conf-date-reveal {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      color: rgba(255, 120, 140, .7);
+      letter-spacing: .1em;
+      opacity: 0;
+      margin-bottom: .4rem
+    }
+
+    .conf-time-reveal {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 9vw, 6rem);
+      color: rgba(255, 80, 100, .6);
+      opacity: 0;
+      line-height: 1;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 60px rgba(255, 80, 100, .4)
+    }
+
+    .conf-content {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .8s, transform .8s
+    }
+
+    .conf-content.show {
+      opacity: 1;
+      transform: none
+    }
+
+    .conf-eye {
+      font-size: clamp(.55rem, 1.4vw, .6rem);
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: rgba(255, 140, 140, .5);
+      margin-bottom: 1.2rem
+    }
+
+    .conf-h {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 7vw, 5.5rem);
+      line-height: 1.12;
+      color: #fff;
+      text-shadow: 0 0 100px rgba(255, 70, 90, .55);
+      margin-bottom: 2rem
+    }
+
+    .ecg-wrap {
+      width: 100%;
+      max-width: min(400px, 88vw);
+      height: 50px;
+      overflow: hidden;
+      margin: 0 auto 2rem
+    }
+
+    .ecg-wrap svg {
+      width: 200%;
+      height: 100%;
+      animation: ecgmove 1.9s linear infinite
+    }
+
+    .conf-q {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(.9rem, 2.6vw, 1.5rem);
+      color: rgba(255, 185, 185, .88);
+      line-height: 1.7;
+      border-left: 2px solid rgba(255, 100, 110, .4);
+      padding-left: 1.3rem;
+      text-align: left;
+      max-width: min(500px, 90vw);
+      margin: 0 auto .4rem
+    }
+
+    .conf-tr {
+      font-size: clamp(.62rem, 1.5vw, .68rem);
+      letter-spacing: .1em;
+      color: rgba(255, 255, 255, .25);
+      margin-bottom: 1rem;
+      text-align: center
+    }
+
+    .conf-q.shimmer-target {
+      position: relative;
+      overflow: hidden
+    }
+
+    .conf-q.shimmer-target::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 200, 100, .18) 50%, transparent 100%);
+      transform: translateX(-100%)
+    }
+
+    .conf-q.do-shimmer::after {
+      animation: shimmerSweep 1.6s ease forwards
+    }
+
+    @keyframes shimmerSweep {
+      from {
+        transform: translateX(-100%)
+      }
+
+      to {
+        transform: translateX(100%)
+      }
+    }
+
+    /* ─── PARTNERS ──────────────────────────────────────── */
+    .gm {
+      max-width: min(440px, 94vw);
+      margin: 1.25rem auto;
+      border-radius: 18px;
+      padding: 1.6rem;
+      text-align: center
+    }
+
+    .gm.h {
+      background: rgba(255, 200, 100, .03);
+      border: 1px solid rgba(255, 200, 130, .1)
+    }
+
+    .gm.k {
+      background: rgba(147, 197, 253, .03);
+      border: 1px solid rgba(147, 197, 253, .1)
+    }
+
+    .gm-lbl {
+      font-size: .6rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      margin-bottom: .6rem
+    }
+
+    .gm-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 4vw, 1.85rem);
+      margin-bottom: .35rem
+    }
+
+    .gm-by {
+      font-size: .65rem;
+      color: rgba(255, 255, 255, .28);
+      letter-spacing: .1em
+    }
+
+    /* ─── STATS ─────────────────────────────────────────── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      max-width: 720px;
+      margin: 2.5rem auto
+    }
+
+    @media(min-width:560px) {
+      .stats {
+        grid-template-columns: repeat(4, 1fr)
+      }
+    }
+
+    .stats.grid-3 {
+      grid-template-columns: repeat(1, 1fr)
+    }
+
+    @media(min-width:560px) {
+      .stats.grid-3 {
+        grid-template-columns: repeat(3, 1fr)
+      }
+    }
+
+    .stat {
+      text-align: center;
+      padding: 1.8rem .8rem;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: var(--card);
+      transition: border-color .3s, transform .3s, opacity .5s
+    }
+
+    .stat:active,
+    .stat:hover {
+      border-color: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .3);
+      transform: translateY(-3px)
+    }
+
+    .snum {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 900;
+      color: var(--ac);
+      display: block;
+      line-height: 1;
+      margin-bottom: .45rem
+    }
+
+    .slbl {
+      font-size: clamp(.5rem, 1.2vw, .58rem);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .28)
+    }
+
+    /* ─── CHART ─────────────────────────────────────────── */
+    .chart-wrap {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      margin: 2rem auto;
+      overflow-x: auto
+    }
+
+    #chart {
+      width: 100%;
+      min-width: 480px;
+      border-radius: var(--r);
+      display: block
+    }
+
+    .chart-legend {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap
+    }
+
+    .cl-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .68rem;
+      color: rgba(255, 255, 255, .35)
+    }
+
+    .cl-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%
+    }
+
+    /* ─── HEATMAP ───────────────────────────────────────── */
+    .hm-wrap {
+      max-width: 900px;
+      margin: 2rem auto;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch
+    }
+
+    .hm-grid {
+      display: flex;
+      gap: 3px;
+      padding-bottom: .5rem;
+      padding-right: 4px
+    }
+
+    .hm-col {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      opacity: 0;
+      transform: scaleY(.5);
+      transform-origin: bottom;
+      transition: opacity .3s, transform .3s
+    }
+
+    .hm-cell {
+      width: 11px;
+      height: 11px;
+      border-radius: 2px;
+      transition: transform .2s
+    }
+
+    .hm-cell:hover,
+    .hm-cell:active {
+      transform: scale(1.7);
+      z-index: 10
+    }
+
+    .hm-legend {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      margin-top: .6rem;
+      justify-content: flex-end;
+      padding-right: 4px
+    }
+
+    .hm-legend span {
+      font-size: .6rem;
+      color: rgba(255, 255, 255, .3)
+    }
+
+    .hml-row {
+      display: flex;
+      gap: 3px
+    }
+
+    .hml-row .hm-cell {
+      cursor: default
+    }
+
+    /* ─── WHO TALKS MORE ────────────────────────────────── */
+    .wtm {
+      max-width: 600px;
+      margin: 2rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem
+    }
+
+    .wtm-row {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem
+    }
+
+    .wtm-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: clamp(.62rem, 1.5vw, .7rem);
+      color: rgba(255, 255, 255, .45);
+      letter-spacing: .08em
+    }
+
+    .wtm-bar-bg {
+      height: 36px;
+      background: rgba(255, 255, 255, .05);
+      border-radius: 50px;
+      overflow: hidden
+    }
+
+    .wtm-bar {
+      height: 100%;
+      border-radius: 50px;
+      width: 0;
+      transition: width 2s cubic-bezier(.16, 1, .3, 1);
+      display: flex;
+      align-items: center;
+      padding-left: 1rem
+    }
+
+    .wtm-bar span {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: .85rem;
+      color: #fff;
+      white-space: nowrap
+    }
+
+    /* ─── WORD CLOUD ────────────────────────────────────── */
+    .wcloud {
+      position: relative;
+      height: clamp(200px, 40vw, 280px);
+      max-width: 800px;
+      margin: 2rem auto;
+      overflow: hidden
+    }
+
+    .ww {
+      position: absolute;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      cursor: default;
+      transition: color .3s, transform .3s;
+      animation: wfloat linear infinite
+    }
+
+    .ww:hover,
+    .ww:active {
+      transform: scale(1.25) !important;
+      color: var(--ac) !important
+    }
+
+    /* ─── NIGHT OWL ─────────────────────────────────────── */
+    .nightowl {
+      min-height: 80svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem clamp(1rem, 4vw, 2rem);
+      position: relative;
+      text-align: center
+    }
+
+    .clock {
+      width: clamp(120px, 30vw, 160px);
+      height: clamp(120px, 30vw, 160px);
+      border-radius: 50%;
+      border: 2px solid rgba(var(--ac-r), var(--ac-g), var(--ac-b), .3);
+      position: relative;
+      margin: 0 auto 2.5rem
+    }
+
+    .clock-face {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      border-radius: 50%
+    }
+
+    .clock::before {
+      content: '12';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .6rem;
+      color: rgba(255, 255, 255, .3)
+    }
+
+    .clock::after {
+      content: '6';
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .6rem;
+      color: rgba(255, 255, 255, .3)
+    }
+
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      border-radius: 2px
+    }
+
+    .h-hour {
+      width: 3px;
+      height: 35%;
+      background: rgba(255, 255, 255, .6);
+      margin-left: -1.5px;
+      animation: rotH 43200s linear infinite
+    }
+
+    .h-min {
+      width: 2px;
+      height: 46%;
+      background: var(--ac);
+      margin-left: -1px;
+      animation: rotM 3600s linear infinite
+    }
+
+    .h-sec {
+      width: 1px;
+      height: 48%;
+      background: rgba(255, 100, 100, .8);
+      margin-left: -.5px;
+      animation: rotS 60s linear infinite
+    }
+
+    .h-center {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--ac);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%)
+    }
+
+    .owl-big {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(4rem, 14vw, 10rem);
+      line-height: .9;
+      color: var(--ac);
+      text-shadow: 0 0 100px rgba(var(--ac-r), var(--ac-g), var(--ac-b), .45)
+    }
+
+    .owl-lbl {
+      font-size: clamp(.58rem, 1.4vw, .65rem);
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .3);
+      margin-top: .5rem;
+      margin-bottom: 2rem
+    }
+
+    .owl-line {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(.88rem, 2.2vw, 1.3rem);
+      color: rgba(255, 255, 255, .45);
+      max-width: 500px;
+      margin: 0 auto .5rem
+    }
+
+    /* ─── QUOTES ────────────────────────────────────────── */
+    .qwall {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+      gap: 1.25rem;
+      margin-top: 2.5rem
+    }
+
+    .qcard {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.7rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s;
+      cursor: default
+    }
+
+    .qcard:active,
+    .qcard:hover {
+      border-color: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .32);
+      transform: translateY(-3px)
+    }
+
+    .qcard::before {
+      content: '\201C';
+      position: absolute;
+      top: -20px;
+      left: 6px;
+      font-family: 'Playfair Display', serif;
+      font-size: 6rem;
+      color: rgba(var(--ac-r), var(--ac-g), var(--ac-b), .07);
+      line-height: 1;
+      pointer-events: none
+    }
+
+    .qcard::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 200, 100, .12), transparent);
+      transform: translateX(-100%)
+    }
+
+    .qcard.do-shimmer::after {
+      animation: shimmerSweep 1.5s ease forwards
+    }
+
+    .qt {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(.86rem, 2.2vw, .94rem);
+      color: rgba(255, 255, 255, .72);
+      line-height: 1.65;
+      margin-bottom: .55rem;
+      position: relative;
+      z-index: 1
+    }
+
+    .qtr {
+      font-size: .68rem;
+      color: rgba(255, 255, 255, .28);
+      margin-bottom: .6rem
+    }
+
+    .qmeta {
+      font-size: .58rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ac)
+    }
+
+    /* ─── KUTTY KATHAI ──────────────────────────────────── */
+    .kk-wrap {
+      max-width: min(560px, 94vw);
+      margin: 2rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem
+    }
+
+    .kk-card {
+      background: rgba(255, 200, 100, .03);
+      border: 1px solid rgba(255, 200, 100, .1);
+      border-radius: 18px;
+      padding: 1.6rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s
+    }
+
+    .kk-card:hover,
+    .kk-card:active {
+      border-color: rgba(255, 200, 100, .3);
+      transform: translateY(-3px)
+    }
+
+    .kk-card::before {
+      content: '\201C';
+      position: absolute;
+      top: -16px;
+      left: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 6rem;
+      color: rgba(255, 200, 100, .07);
+      line-height: 1;
+      pointer-events: none
+    }
+
+    .kk-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(.84rem, 2.1vw, .92rem);
+      color: rgba(255, 235, 160, .8);
+      line-height: 1.75;
+      position: relative;
+      z-index: 1
+    }
+
+    .kk-tr {
+      font-size: .68rem;
+      color: rgba(255, 255, 255, .28);
+      margin-top: .5rem;
+      line-height: 1.6
+    }
+
+    .kk-highlight {
+      background: rgba(255, 200, 100, .06);
+      border-left: 2px solid rgba(255, 200, 100, .4);
+      padding: 1rem 1.2rem;
+      border-radius: 0 12px 12px 0;
+      margin-top: 1.2rem
+    }
+
+    .kk-highlight .kk-text {
+      color: rgba(255, 245, 200, .9);
+      font-size: clamp(.86rem, 2.2vw, .95rem)
+    }
+
+    .inner-voice {
+      max-width: min(520px, 94vw);
+      margin: 2rem auto;
+      padding: 2rem 1.8rem;
+      border-radius: 20px;
+      background: rgba(147, 197, 253, .025);
+      border: 1px solid rgba(147, 197, 253, .1);
+      position: relative;
+      text-align: center
+    }
+
+    .inner-voice::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(147, 197, 253, .05), transparent);
+      pointer-events: none
+    }
+
+    .iv-label {
+      font-size: .58rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: rgba(147, 197, 253, .4);
+      margin-bottom: 1rem
+    }
+
+    .iv-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(.95rem, 2.5vw, 1.25rem);
+      color: rgba(200, 225, 255, .75);
+      line-height: 1.75
+    }
+
+    .iv-tr {
+      font-size: .65rem;
+      color: rgba(255, 255, 255, .25);
+      margin-top: .6rem;
+      letter-spacing: .08em
+    }
+
+    .iv-date {
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(147, 197, 253, .3);
+      margin-top: .4rem
+    }
+
+    /* ─── INNER VOICE SECTION ───────────────────────────── */
+    .innervoice {
+      min-height: 70svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem);
+      position: relative;
+      overflow: hidden
+    }
+
+    .iv-inner {
+      text-align: center;
+      max-width: min(600px, 96vw)
+    }
+
+    .iv-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(147, 197, 253, .04) 0%, transparent 65%);
+      pointer-events: none
+    }
+
+    .iv-tamil {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 3vw, 1.7rem);
+      color: rgba(200, 225, 255, .78);
+      line-height: 1.65;
+      margin: 1.5rem auto;
+      max-width: min(520px, 94vw)
+    }
+
+    .iv-en {
+      font-size: clamp(.8rem, 2vw, .96rem);
+      color: rgba(255, 255, 255, .32);
+      line-height: 1.8;
+      margin-bottom: .5rem
+    }
+
+    /* ─── FINALE ────────────────────────────────────────── */
+    .finale {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem clamp(1rem, 4vw, 2rem);
+      text-align: center;
+      position: relative;
+      overflow: hidden
+    }
+
+    .petal-stage {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden
+    }
+
+    .petal {
+      position: absolute;
+      bottom: -40px;
+      opacity: 0;
+      animation: emberRise linear infinite
+    }
+
+    .petal svg {
+      transform-origin: center;
+      filter: blur(2px) drop-shadow(0 0 6px rgba(255, 200, 100, .9))
+    }
+
+    .letter {
+      max-width: min(560px, 96vw);
+      text-align: left;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: clamp(1.6rem, 4vw, 3rem);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(.88rem, 2.2vw, .98rem);
+      line-height: 2.05;
+      color: rgba(255, 255, 255, .58);
+      position: relative;
+      overflow: hidden;
+      min-height: 80px
+    }
+
+    .letter::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(var(--ac-r), var(--ac-g), var(--ac-b), .12), transparent 55%, rgba(var(--ac-r), var(--ac-g), var(--ac-b), .06));
+      pointer-events: none;
+      z-index: 0
+    }
+
+    .letter-content {
+      position: relative;
+      z-index: 1
+    }
+
+    .letter-content p {
+      opacity: 0;
+      transform: translateY(6px);
+      margin-bottom: 0
+    }
+
+    .letter-content br {
+      display: block;
+      margin: .6em 0
+    }
+
+    .letter-content p.tw-done {
+      opacity: 1;
+      transform: none
+    }
+
+    .tw-cursor {
+      display: inline-block;
+      color: var(--ac);
+      animation: blink .7s step-end infinite;
+      font-style: normal;
+      font-weight: 300;
+      opacity: .8
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: .8
+      }
+
+      50% {
+        opacity: 0
+      }
+    }
+
+    .sig {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      color: var(--ac);
+      display: block;
+      text-align: right;
+      margin-top: 1.5rem;
+      opacity: 0;
+      transition: opacity .8s
+    }
+
+    .fin-date {
+      font-size: .6rem;
+      letter-spacing: .3em;
+      color: rgba(255, 255, 255, .18);
+      margin-top: 2rem
+    }
+
+    @keyframes emberRise {
+      0% {
+        transform: translateX(0) translateY(0) scale(.4);
+        opacity: 0
+      }
+
+      5% {
+        opacity: .9;
+        transform: translateX(10px) translateY(-5vh) scale(1.2)
+      }
+
+      90% {
+        opacity: .7
+      }
+
+      100% {
+        transform: translateX(var(--drift)) translateY(-120vh) scale(.6);
+        opacity: 0
+      }
+    }
+
+    /* ─── KEYFRAMES ─────────────────────────────────────── */
+    @keyframes fup {
+      from {
+        opacity: 0;
+        transform: translateY(16px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes fin {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    @keyframes pulseV {
+
+      0%,
+      100% {
+        opacity: .5
+      }
+
+      50% {
+        opacity: .15
+      }
+    }
+
+    @keyframes ecgmove {
+      from {
+        transform: translateX(0)
+      }
+
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    @keyframes rotH {
+      from {
+        transform: rotate(0deg)
+      }
+
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes rotM {
+      from {
+        transform: rotate(0deg)
+      }
+
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes rotS {
+      from {
+        transform: rotate(0deg)
+      }
+
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes wfloat {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-8px)
+      }
+    }
+
+    @keyframes countIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(.9)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes dateReveal {
+      from {
+        opacity: 0;
+        letter-spacing: .5em
+      }
+
+      to {
+        opacity: 1;
+        letter-spacing: .1em
+      }
+    }
+
+    @keyframes timeReveal {
+      from {
+        opacity: 0;
+        transform: scale(.6)
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1)
+      }
+    }
+
+    @keyframes flatline {
+      0% {
+        transform: scaleY(1)
+      }
+
+      50% {
+        transform: scaleY(.05)
+      }
+
+      100% {
+        transform: scaleY(1)
+      }
+    }
+
+    /* ─── CINEMATIC: LETTERBOX ──────────────────────────── */
+    #lbx-t,
+    #lbx-b {
+      position: fixed;
+      left: 0;
+      right: 0;
+      background: #000;
+      z-index: 9990;
+      transition: height 1.5s cubic-bezier(.76, 0, .24, 1);
+      will-change: height
+    }
+
+    #lbx-t {
+      top: 0;
+      height: clamp(28px, 9svh, 90px)
+    }
+
+    #lbx-b {
+      bottom: 0;
+      height: clamp(28px, 9svh, 90px)
+    }
+
+    #lbx-t.open,
+    #lbx-b.open {
+      height: 0
+    }
+
+    /* ─── CINEMATIC: VIGNETTE ───────────────────────────── */
+    #vignette {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+      background: radial-gradient(ellipse at 50% 50%, transparent 25%, rgba(0, 0, 0, .78) 100%)
+    }
+
+    /* ─── CINEMATIC: FILM GRAIN ─────────────────────────── */
+    #grain {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+      opacity: .052;
+      mix-blend-mode: overlay;
+      image-rendering: pixelated;
+      object-fit: cover
+    }
+
+    /* ─── CINEMATIC: CHAPTER CARD ───────────────────────── */
+    #chapter-card {
+      position: fixed;
+      inset: 0;
+      z-index: 9985;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .55s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    #chapter-card.show {
+      opacity: 1;
+      pointer-events: none
+    }
+
+    .cc-rule {
+      width: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, .18);
+      margin: 1.4rem auto;
+      transition: width 1s cubic-bezier(.2, 1, .2, 1) .25s
+    }
+
+    #chapter-card.show .cc-rule {
+      width: min(100px, 22vw)
+    }
+
+    .cc-eyebrow {
+      font-size: clamp(.5rem, .85vw, .58rem);
+      letter-spacing: .65em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .26);
+      margin-bottom: 1.4rem;
+      font-family: 'Josefin Sans', sans-serif;
+      opacity: 0;
+      transform: translateY(10px) scale(.95);
+      transition: opacity 1s cubic-bezier(.2, 1, .2, 1) .08s, transform 1s cubic-bezier(.2, 1, .2, 1) .08s
+    }
+
+    #chapter-card.show .cc-eyebrow {
+      opacity: 1;
+      transform: none
+    }
+
+    .cc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 10vw, 7rem);
+      color: #fff;
+      line-height: 1.08;
+      font-weight: 700;
+      font-style: italic;
+      opacity: 0;
+      transform: translateY(14px) scale(.95);
+      transition: opacity 1s cubic-bezier(.2, 1, .2, 1) .18s, transform 1s cubic-bezier(.2, 1, .2, 1) .18s;
+      text-align: center;
+      padding: 0 clamp(1rem, 4vw, 2rem);
+      max-width: min(800px, 96vw)
+    }
+
+    #chapter-card.show .cc-title {
+      opacity: 1;
+      transform: none
+    }
+
+    .cc-date {
+      font-size: clamp(.5rem, .85vw, .58rem);
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .2);
+      margin-top: 1.6rem;
+      font-family: 'Josefin Sans', sans-serif;
+      opacity: 0;
+      transform: translateY(10px) scale(.95);
+      transition: opacity 1s cubic-bezier(.2, 1, .2, 1) .32s, transform 1s cubic-bezier(.2, 1, .2, 1) .32s
+    }
+
+    #chapter-card.show .cc-date {
+      opacity: 1;
+      transform: none
+    }
+
+    /* ─── CINEMATIC: SCENE COUNTER ──────────────────────── */
+    #scene-ctr {
+      position: fixed;
+      bottom: 1.4rem;
+      left: 1.2rem;
+      font-size: .5rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .13);
+      z-index: 200;
+      font-family: 'Josefin Sans', sans-serif;
+      pointer-events: none;
+      line-height: 1.8;
+      transition: color .5s
+    }
+
+    /* ─── CINEMATIC: FLASH ──────────────────────────────── */
+    #cine-flash {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      pointer-events: none;
+      z-index: 9970;
+      opacity: 0;
+      transition: opacity .14s
+    }
+
+    /* ─── CINEMATIC: CLIP-PATH REVEAL ──────────────────── */
+    @media(min-width:600px) {
+      .inner {
+        clip-path: inset(0 0 8% 0);
+        transition: opacity 1.5s cubic-bezier(.2, 1, .2, 1), transform 1.5s cubic-bezier(.2, 1, .2, 1), filter 1.5s cubic-bezier(.2, 1, .2, 1), clip-path 1.5s cubic-bezier(.2, 1, .2, 1)
+      }
+
+      .inner.show {
+        clip-path: inset(0)
+      }
+    }
+
+    /* ─── CINEMATIC: HEADING UNDERSCORE ────────────────── */
+    h2.sh::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 1px;
+      background: var(--ac);
+      opacity: .22;
+      margin: .7rem auto 0;
+      transition: width 1.4s .5s cubic-bezier(.16, 1, .3, 1)
+    }
+
+    .inner.show h2.sh::after {
+      width: clamp(40px, 8vw, 72px)
+    }
+
+    /* ─── CINEMATIC: SECTION BURN-IN ───────────────────── */
+    .sec::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, .4) 0%, transparent 12%, transparent 88%, rgba(0, 0, 0, .4) 100%);
+      z-index: 0
+    }
+
+    /* ─── INNER VOICE PARTICLES ─────────────────────────── */
+    .iv-particle {
+      position: absolute;
+      font-size: clamp(.7rem, 2vw, .85rem);
+      pointer-events: none;
+      animation: ivFloat linear infinite;
+      opacity: 0
+    }
+
+    @keyframes ivFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(0)
+      }
+
+      10% {
+        opacity: .55
+      }
+
+      80% {
+        opacity: .35
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-70px)
+      }
+    }
+
+    /* ─── HERO REFINEMENT ───────────────────────────────── */
+    .hero-title {
+      letter-spacing: -.02em
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--bg));
+      pointer-events: none;
+      z-index: 1
+    }
+
+    /* ─── LAUNCH SCREEN ─────────────────────────────────── */
+    #launch-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1), visibility 1.2s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    #launch-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .tap-to-open {
+      font-size: .65rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      animation: pulseV 2s infinite;
+      text-align: center;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="launch-screen">
+    <div>
+      <h1 class="hero-title" style="margin-bottom:0; animation:none; opacity:1;">Kishore<br>&amp; <em>Harini</em></h1>
+      <div class="tap-to-open">Tap anywhere to open</div>
+    </div>
+  </div>
+
+  <div id="prog"></div>
+  <canvas id="stars"></canvas>
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+  <canvas id="sparkle-canvas"></canvas>
+
+  <nav class="ndots" id="ndots"></nav>
+
+  <!-- ╔══ CINEMATIC LAYERS ══╗ -->
+  <div id="lbx-t"></div>
+  <div id="lbx-b"></div>
+  <div id="vignette"></div>
+  <canvas id="grain"></canvas>
+  <div id="chapter-card">
+    <div class="cc-eyebrow" id="cc-eyebrow"></div>
+    <div class="cc-title" id="cc-title"></div>
+    <div class="cc-rule"></div>
+    <div class="cc-date" id="cc-date"></div>
+  </div>
+  <div id="scene-ctr">Scene <span id="scene-num">01</span></div>
+  <div id="cine-flash"></div>
+  <!-- ╚══════════════════════╝ -->
+
+  <audio id="bgm" src="KP_Track.mp3" loop playsinline></audio>
+
+  <div class="wrap" id="wrap">
+
+    <!-- ██ 0 · HERO ██ -->
+    <section class="hero" id="s0">
+      <div class="orb" data-depth="1" style="width:600px;height:600px;background:rgba(100,149,237,.06);top:15%;left:5%">
+      </div>
+      <div class="hero-eye">A Love Story · Nov 2023 → Present</div>
+      <h1 class="hero-title" id="hero-title-el">Kishore<br>&amp; <em>Harini</em></h1>
+      <p class="hero-sub">181,320 messages &nbsp;·&nbsp; 808 days &nbsp;·&nbsp; 1 story</p>
+      <div class="first-bubble">
+        <div class="fb-meta">25 November 2023 · 12:25 PM · The Very First Message</div>
+        <div class="fb-text">"Hey! This is Kishore! Air Wedge Experiment Calculation, Neenga Eludhi Correction
+          vaangitiya?" 😅</div>
+      </div>
+      <div class="first-bubble" style="margin-top:.75rem;opacity:0;animation:fup 1s 1.7s forwards">
+        <div class="fb-meta">25 November 2023 · 12:33 PM · 8 minutes later</div>
+        <div class="fb-text">She sent three photos. He said "Thank you ☺️". She replied "Tq 🥰". That was the whole
+          thing. That was everything.</div>
+      </div>
+      <div class="scroll-hint"><span>Scroll to begin</span>
+        <div class="sh-line"></div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 1 · THE EXPLOSION ██ -->
+    <section class="sec explosion" id="s1">
+      <div class="orb" data-depth="2" style="width:500px;height:500px;background:rgba(80,220,120,.04);top:20%;left:0">
+      </div>
+      <div class="inner" id="i1">
+        <div class="tag">Chapter One · The Origin</div>
+        <h2 class="sh">One Month.<br><em>Everything Changed.</em></h2>
+        <div style="margin:2rem 0">
+          <div class="big-num" id="bignum">0</div>
+          <div class="exp-label">Times more messages in December than November 2023</div>
+        </div>
+        <div class="exp-row">
+          <div class="exp-pill">November 2023 <strong>35 msgs</strong></div>
+          <div class="arr">→</div>
+          <div class="exp-pill">December 2023 <strong>9,764 msgs</strong></div>
+        </div>
+        <p class="body" style="margin-top:2rem">It started as lab notes. Then homework. Then life. By December they were
+          talking 9,764 times in a single month — that's once every <strong style="color:var(--ac)">4.4 minutes</strong>
+          of every waking hour.</p>
+        <!-- <div class="chat" data-animate="true">
+          <div class="row k">
+            <div>
+              <div class="bname r">Kishore</div>
+              <div class="bubble bk">Vegetable Briyani saaptutu irken 😅<br>Vegetable ah microscope la thedura maari
+                iruku 😂</div>
+              <div class="btime r">Dec 17, 2023</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bname">Harini</div>
+              <div class="bubble bh">Yee vegetable uh microscope la dha thedura maari iruthu dha 😂😂</div>
+              <div class="btime">20:19</div>
+            </div>
+          </div>
+          <div class="row k">
+            <div>
+              <div class="bubble bk">Pattani mattum than irkum 😂😂</div>
+              <div class="btime r">20:19</div>
+            </div>
+          </div>
+        </div>
+        <div class="chat" data-animate="true" style="margin-top:1.2rem">
+          <div class="row h">
+            <div>
+              <div class="bname">Harini</div>
+              <div class="bubble bh">Avan v2la nalla paiyan mari engayum pooga matan</div>
+              <div class="btime">Dec 25, 2023 · 22:32</div>
+            </div>
+          </div>
+          <div class="row h" style="margin-top:.3rem">
+            <div>
+              <div class="bubble bh">Aniyayathuku nalla paiyana irukinga</div>
+              <div class="btime">Dec 26, 2023 · 22:43</div>
+            </div>
+          </div>
+        </div>
+        <p class="body" style="margin-top:1.2rem;font-size:.78rem;font-style:italic">She was already noticing. He had no
+          idea.</p>
+      </div> -->
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 2 · THE LAUGHS ██ -->
+    <section class="sec" id="s2">
+      <div class="yr">😂</div>
+      <div class="inner" id="i2">
+        <div class="tag">Their Comedy Archive</div>
+        <h2 class="sh"><em>36,341</em> Laughing Emojis<br>This Is Why</h2>
+        <p class="body">One laugh every 5 messages. These are the exchanges that earned every single one of them.</p>
+        <div class="jokes-grid">
+          <div class="joke" data-num="01">
+            <div class="joke-title">⏰ The Alarm Situation</div>
+            <div class="joke-chat">
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Na 10 alarm veipen — 5 mani la irunthu adikum
+                    😂<br>Apdyum 7:30 ku than enthikren 😂</div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Athuku vekkamalea irukalam ah — disturb ilama thungalam
+                    😂</div>
+                </div>
+              </div>
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Enthikanum nu ninechu veipen, but thoonguren 😂</div>
+                </div>
+              </div>
+            </div>
+            <div class="joke-punch">He sets 10 alarms. Snoozes all 10. 😂</div>
+          </div>
+          <div class="joke" data-num="02">
+            <div class="joke-title">🎬 The Movie Director</div>
+            <div class="joke-chat">
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Ipd irntha, Yen padathula Heroine role kudukren 😂</div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Adengappa 😂 Athu budget problem naala 😂</div>
+                </div>
+              </div>
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Vera Producer irunthalum, ungala thedi vandhurupom nu
+                    director solraru 😂😂😂</div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Achoo mudiyala daa 😂😂😂</div>
+                </div>
+              </div>
+            </div>
+            <div class="joke-punch">Even imaginary producers want her. 😂</div>
+          </div>
+          <div class="joke" data-num="03">
+            <div class="joke-title">📚 The Kamal Dialogue</div>
+            <div class="joke-chat">
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Nalaiku pathukalam</div>
+                </div>
+              </div>
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Elllam Kamal dialogue than 😂 "Paathukalam"</div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Kamal dialogue ahh?? Enaku thryathu 😂</div>
+                </div>
+              </div>
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Vikram padathula varum 😂 Namma daily atha than soltu
+                    irkom!</div>
+                </div>
+              </div>
+            </div>
+            <div class="joke-punch">Their relationship philosophy = Kamal Haasan. 😂</div>
+          </div>
+          <div class="joke" data-num="04">
+            <div class="joke-title">🩸 The Blood Letter</div>
+            <div class="joke-chat">
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Na solravan, unakaaga ratham sindhi kooda eluthuvan 😂
+                  </div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Achoo aprm rathathula letters maranchurume 😂</div>
+                </div>
+              </div>
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Letters eh rathathula than eluthuvaaru 🤣</div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Na unna rathathula elutha sonnen nu Fairoze mam note ah
+                    paraka viduvanga 😂</div>
+                </div>
+              </div>
+            </div>
+            <div class="joke-punch">Most dramatic assignment submission ever. 😂</div>
+          </div>
+          <div class="joke" data-num="05">
+            <div class="joke-title">📱 Physics = Alarm Delay</div>
+            <div class="joke-chat">
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Good Morning Partner 🌅✨<br>Sorry partner — Alarm konjam
+                    delay aagiruchu 😂</div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Physics nu dhana delay 😂😂 Ahhaaa 😂</div>
+                </div>
+              </div>
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Illlai illai 😂😂😂</div>
+                </div>
+              </div>
+            </div>
+            <div class="joke-punch">She noticed. She always notices. 😂</div>
+          </div>
+          <div class="joke" data-num="06">
+            <div class="joke-title">😤 His Many "Fans"</div>
+            <div class="joke-chat">
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Ponnungaluku than avanga fans ah kanne thrya maatikudhe
+                    😂😂</div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">😂😂😂😂 Ahhaaa 😂</div>
+                </div>
+              </div>
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Unaku theriyum ndratha, un fan ku theriya veikanum 😂😂
+                  </div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Epdi oru oruthartaya pooi unna enaku theriyum nu
+                    sollanum ah 😂</div>
+                </div>
+              </div>
+            </div>
+            <div class="joke-punch">She texted this at 8:26 AM. Right after waking up. 😂</div>
+          </div>
+          <div class="joke" data-num="07">
+            <div class="joke-title">😴 Dream Rehearsal</div>
+            <div class="joke-chat">
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Good Night 😴<br>Dream la oru rehearsal eduthukonga 😂
+                  </div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Okay 😂😂 Bye bye</div>
+                </div>
+              </div>
+            </div>
+            <div class="joke-punch">The night before their first "Good Morning Partner." 😂</div>
+          </div>
+          <div class="joke" data-num="08">
+            <div class="joke-title">🤝 Thambi Protocol</div>
+            <div class="joke-chat">
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Thambi ah nee 😂</div>
+                </div>
+              </div>
+              <div class="row k" style="justify-content:flex-end">
+                <div>
+                  <div class="bubble bk" style="max-width:100%">Ama 😂 Rendu Sisters — Thambi than</div>
+                </div>
+              </div>
+              <div class="row h">
+                <div>
+                  <div class="bubble bh" style="max-width:100%">Unaku ella akka ah panni kudupankala 😂</div>
+                </div>
+              </div>
+            </div>
+            <div class="joke-punch">She called him "thambi" in Dec 2023. He became her partner. Classic. 😂</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 3 · TIMELINE ██ -->
+    <section class="sec" id="s3">
+      <div class="inner" id="i3">
+        <div class="tag">Every Milestone</div>
+        <h2 class="sh">The <em>Timeline</em><br>of Firsts</h2>
+        <p class="body">Every great story has moments that changed everything. Theirs have eight.</p>
+        <div class="timeline" id="timeline">
+          <div class="tl-line" id="tl-line"></div>
+          <div class="tnode" id="tn0">
+            <div class="tdate">25 November 2023</div>
+            <div class="ttitle">The First Message 💬</div>
+            <div class="tdesc">Air Wedge Experiment. He needed lab notes. She sent three photos within 8 minutes. He
+              said "Thank you ☺️". She replied "Tq 🥰". Nine words. Two hearts that didn't know yet.</div>
+          </div>
+          <div class="tnode" id="tn1">
+            <div class="tdate">4 December 2023 · 23:26</div>
+            <div class="ttitle">First "Good Night" — and "Paathukalam" 🌙</div>
+            <div class="tdesc">The same night. She said she was scared about the lab test. He said "Paathukalam 😂" —
+              his first ever use of the word. She laughed. Then she said "Good night." He said "Bye 👋". In one
+              conversation, two of their forever-words were born.</div>
+          </div>
+          <div class="tnode" id="tn2">
+            <div class="tdate">5 December 2023</div>
+            <div class="ttitle">First "Thambi" 😂</div>
+            <div class="tdesc">"Thambi ah nee 😂" — she called him younger brother. He played along. It would take 5
+              more months before "thambi" quietly became "partner." That's how slowly, and then all at once, things
+              changed.</div>
+          </div>
+          <div class="tnode" id="tnX">
+            <div class="tdate">10 December 2023</div>
+            <div class="ttitle">First "Good Morning" ☀️</div>
+            <div class="tdesc">Again, Harini first. "Good morning" — casual, just two words. He replied with a coffee
+              emoji and admitted he'd just woken up. She's said it 533 times. He's said it 445 times. That's 978
+              mornings that started with each other.</div>
+          </div>
+          <div class="tnode" id="tn3">
+            <div class="tdate">17 December 2023</div>
+            <div class="ttitle">"Paathukalam" Goes Official 😂</div>
+            <div class="tdesc">He revealed it's a Kamal Haasan dialogue from Vikram. She had no idea. They've used it
+              1,746 times since. It started as an excuse to delay — it became their philosophy of love.</div>
+          </div>
+          <div class="tnode big" id="tn4">
+            <div class="tdate">14 April 2024 · 21:22</div>
+            <div class="ttitle">The First "Partner" 💛</div>
+            <div class="tdesc">He was joking about being her singing partner. She said "Seringa partner." He replied
+              "Okay Partner 😂" — testing it, almost daring it to stick. The very next morning at 7:14 AM he typed "Good
+              Morning Partner 🌅✨" and sent it before he could second-guess himself. She replied at 7:43. They never
+              stopped.</div>
+          </div>
+          <div class="tnode" id="tn5">
+            <div class="tdate">25 April 2024</div>
+            <div class="ttitle">Their Loudest Day 📣</div>
+            <div class="tdesc">1,133 messages in a single day — their personal record. Not a special occasion. Just a
+              Thursday. May 2024 became their biggest month — 16,421 messages. Something was growing fast and neither of
+              them was slowing it down.</div>
+          </div>
+          <div class="tnode" id="tnY">
+            <div class="tdate">5 August 2024</div>
+            <div class="ttitle">"My Bliss" 🌤️</div>
+            <div class="tdesc">Out of nowhere, after a Good Morning, she typed two words: "My bliss." No explanation. No
+              context. He asked "Apdna?" She said "Replacement la illa — athe dhan." She sent it again in September.
+              October. November. At least fifteen times across 2024. She never explained. She never had to.</div>
+          </div>
+          <div class="tnode" id="tnK">
+            <div class="tdate">26 October 2024</div>
+            <div class="ttitle">The Story She Never Planned to Tell 💛</div>
+            <div class="tdesc">Unprompted, she sent him a "kutty kathai" — a little story about why he was different.
+              She said she'd started talking to him just like that, and then one day she noticed: they'd talked every
+              single day since. "Apala avan enna velai irunthalu enkitta pesuvan — content eh illa naalu pesuvan." She
+              said his smile was there in everything. She said he understood what she needed without being asked. Then
+              she added: "Athula avan thappu ethum illa — na dhan ipdi maathiten." She blamed no one. She just told the
+              truth.</div>
+          </div>
+          <div class="tnode" id="tnINV">
+            <div class="tdate">13 January 2025</div>
+            <div class="ttitle">Her Rarest Thought 🌙</div>
+            <div class="tdesc">"En aal amaithiya en manasu kulla irukaru — avara yen inga ilukura." My person is sitting
+              so quietly inside my heart — why am I pulling him here? She was talking to herself. She was talking about
+              Kishore.</div>
+          </div>
+          <div class="tnode big" id="tn7">
+            <div class="tdate">14 April 2026 · 20:50</div>
+            <div class="ttitle">Still Singing. Still Here. 🎵</div>
+            <div class="tdesc">She asked "Enaku epa paada pora?" He answered: "Ithuve unaku paadunathu than." She went
+              quiet. Then: "Enaku paaduniya?" He said "Ama 😂." She said good night. He said it back. Two and a half
+              years in — and he's still dedicating songs.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+
+    <!-- ██ 3.5 · KUTTY KATHAI ██ -->
+    <section class="sec" id="s3c">
+
+      <div class="yr" style="color:rgba(255,200,100,.02)">2024</div>
+      <div class="orb" data-depth="2"
+        style="width:600px;height:600px;background:rgba(255,200,80,.04);top:20%;left:-10%"></div>
+      <div class="inner" id="i3b">
+        <div class="tag">26 October 2024 · Unprompted</div>
+        <h2 class="sh">Her <em>Kutty Kathai</em><br>She Never Planned to Tell</h2>
+        <p class="body">Without being asked, without a prompt — Harini sent a long message one evening. She called it a
+          "kutty kathai" (a small story). It was the most intimate thing she'd ever shared about him.</p>
+        <div class="kk-wrap">
+          <div class="kk-card">
+            <div class="kk-text">"Kishore nu oru paiyan ta summa dhan pesa start pannen."</div>
+            <div class="kk-tr">I started talking to Kishore just casually — no plan, no reason.</div>
+          </div>
+          <div class="kk-card">
+            <div class="kk-text">"One day I amazed to see — pesa start panna naal la irunthu daily uh pesirukom, expect
+              1 day — before Kerala porathuku munnadi varikum."</div>
+            <div class="kk-tr">From the first day we started talking, we've spoken every single day — except one — right
+              up until your Kerala trip.</div>
+          </div>
+          <div class="kk-card">
+            <div class="kk-text">"Apala avan enna velai irunthalu enkitta pesuvan. Content eh illa naalu pesuvan — athu
+              pesurathula smiley dhan athigam irukum."</div>
+            <div class="kk-tr">No matter how busy he is, he finds me. Even with nothing to say — most of what he sends
+              is just smileys. But he sends them.</div>
+          </div>
+          <div class="kk-card">
+            <div class="kk-text">"Voluntary kekamaye help pannuvan. Enaku enna venum nu dhana understand panni
+              pannuvan."</div>
+            <div class="kk-tr">Without being asked, he helps. He somehow understands what I need before I say it.</div>
+          </div>
+          <div class="kk-highlight">
+            <div class="kk-text">"Ithula paakubothu enaku — epuraa ipdi oruthan apdi nu iruku."</div>
+            <div class="kk-tr">When I look at all of this — I wonder, how is it that someone like him exists?</div>
+          </div>
+          <div class="kk-card" style="background:rgba(255,150,150,.02);border-color:rgba(255,150,150,.1)">
+            <div class="kk-text" style="color:rgba(255,210,210,.75)">"Athula avan thappu ethum illa — na dhan ipdi
+              maathiten."</div>
+            <div class="kk-tr" style="color:rgba(255,200,200,.3)">None of this is his fault. I'm the one who changed —
+              he stayed exactly who he was. I walked into my own feelings.</div>
+          </div>
+        </div>
+        <p class="body" style="margin-top:2rem;font-size:.78rem;color:rgba(255,235,160,.3)">She sent this unprompted, on
+          a quiet October evening. She called it a small story. He called it the most important thing he'd ever read.
+          She blamed herself for catching feelings — as if it were a mistake. It wasn't.</p>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+
+    <section class="confession" id="s4">
+      <div class="hb"></div>
+      <div class="hb"></div>
+      <div class="hb"></div>
+      <div class="hb"></div>
+      <div class="orb" data-depth="1"
+        style="width:800px;height:800px;background:rgba(255,50,80,.05);top:50%;left:50%;transform:translate(-50%,-50%)">
+      </div>
+      <div class="conf-countdown" id="conf-countdown">
+        <div class="conf-date-reveal" id="conf-date">03 November 2024</div>
+        <div class="conf-time-reveal" id="conf-time">15:33</div>
+      </div>
+      <div class="conf conf-content" id="conf4">
+        <div class="conf-eye">The Moment That Changed Everything</div>
+        <h2 class="conf-h">The Heartbeat<br>Had a Name</h2>
+        <div class="ecg-wrap" id="ecg-wrap">
+          <svg viewBox="0 0 800 50" fill="none" preserveAspectRatio="none">
+            <polyline
+              points="0,25 45,25 55,3 65,48 75,6 85,44 95,25 160,25 225,25 290,25 300,3 310,48 320,6 330,44 340,25 405,25 470,25 535,25 545,3 555,48 565,6 575,44 585,25 650,25 715,25 780,25 790,3 800,25"
+              stroke="rgba(255,90,110,.8)" stroke-width="1.4" fill="none" />
+            <polyline
+              points="800,25 845,25 855,3 865,48 875,6 885,44 895,25 960,25 1025,25 1090,25 1100,3 1110,48 1120,6 1130,44 1140,25 1205,25 1270,25 1335,25 1345,3 1355,48 1365,6 1375,44 1385,25 1450,25 1515,25 1580,25 1590,3 1600,25"
+              stroke="rgba(255,90,110,.8)" stroke-width="1.4" fill="none" />
+          </svg>
+        </div>
+        <p class="body" style="font-size:.82rem;margin-bottom:1.5rem;color:rgba(255,180,180,.55)">He spent two hours
+          that afternoon hinting at a mystery person — someone who knew her, someone whose heartbeat said something. She
+          kept guessing. He kept deflecting. Then at 15:32, he finally left the clue:</p>
+        <div class="chat" data-animate="true" style="margin-bottom:1.5rem">
+          <div class="row k">
+            <div>
+              <div class="bname r">Kishore</div>
+              <div class="bubble bk" style="background:rgba(255,90,110,.14);border-color:rgba(255,90,110,.3)">Avaruku
+                heartbeat,</div>
+              <div class="btime r">15:32</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bname">Harini</div>
+              <div class="bubble bh">Dub lub nu thudikuma</div>
+              <div class="btime">15:33</div>
+            </div>
+          </div>
+          <div class="row k">
+            <div>
+              <div class="bubble bk" style="background:rgba(255,90,110,.14);border-color:rgba(255,90,110,.3)">Harini
+                Harini nu thudikutham 🤣</div>
+              <div class="btime r">15:33</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bubble bh">😂😂😂😂 Enna kalaikuriya</div>
+              <div class="btime">15:33</div>
+            </div>
+          </div>
+          <div class="row k">
+            <div>
+              <div class="bubble bk" style="background:rgba(255,90,110,.14);border-color:rgba(255,90,110,.3)">Ullatha
+                sonnen pa 😂</div>
+              <div class="btime r">15:34</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bubble bh">Enaku therinju oruthar ku dhan apdi thudikum…<br>Oru vela avara irukumo 👀</div>
+              <div class="btime">15:34</div>
+            </div>
+          </div>
+          <div class="row k">
+            <div>
+              <div class="bubble bk" style="background:rgba(255,90,110,.14);border-color:rgba(255,90,110,.3)">Avara yaru
+                nu solu 😏</div>
+              <div class="btime r">15:35</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bubble bh">But avaruku ithu set aagathe 😶</div>
+              <div class="btime">15:36</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bubble bh">Avara kasta padutha en manasu ethukathu 🥺</div>
+              <div class="btime">15:37</div>
+            </div>
+          </div>
+        </div>
+        <div class="conf-q shimmer-target">"Harini Harini nu thudikutham"</div>
+        <div class="conf-tr">My heartbeat says your name, Harini</div>
+        <div class="conf-q shimmer-target"
+          style="margin-top:.8rem;border-left-color:rgba(255,150,80,.4);color:rgba(255,205,170,.85)">"Na solravan,
+          unakaaga ratham sindhi kooda eluthuvan"</div>
+        <div class="conf-tr">I mean every word — I'd write with my own blood for you</div>
+        <div class="conf-q shimmer-target"
+          style="margin-top:.8rem;border-left-color:rgba(255,180,120,.3);color:rgba(255,220,190,.7)">"Avara kasta
+          padutha en manasu ethukathu"</div>
+        <div class="conf-tr">My heart won't take hurting him — she said it instinctively, before she even admitted who
+          "him" was</div>
+        <p class="body" style="margin-top:1.5rem;font-size:.78rem;color:rgba(255,180,180,.4)">She laughed. She called it
+          teasing. She said "But avaruku ithu set aagathe" — playing coy about the mystery person. Then she left the
+          door open — just a little — with "Oru vela avara irukumo 👀." The mystery person she'd been guessing about all
+          afternoon was him. Her heart already knew. It always had.</p>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 5 · PARTNERS ██ -->
+    <section class="sec" id="s5">
+      <div class="yr" style="left:-1rem;right:auto;color:rgba(255,200,100,.025)">2025</div>
+      <div class="orb" data-depth="2" style="width:500px;height:500px;background:rgba(255,200,80,.04);top:10%;right:0">
+      </div>
+      <div class="inner" id="i5">
+        <div class="tag">Chapter Three · 2025 Onwards</div>
+        <h2 class="sh">Every Morning<br>Begins With <em>Partner</em></h2>
+        <p class="body">864 times. That word. Two syllables that carry the weight of two years. Neither of them planned
+          it. Both of them kept it.</p>
+        <div class="gm h">
+          <div class="gm-lbl" style="color:rgba(255,200,130,.45)">Every single morning · 533 times</div>
+          <div class="gm-text" style="color:#ffd080">Good morning partner ✨</div>
+          <div class="gm-by">— Harini</div>
+        </div>
+        <div class="gm k">
+          <div class="gm-lbl" style="color:rgba(147,197,253,.4)">His reply, always · 445 times</div>
+          <div class="gm-text" style="color:#93c5fd">Good morning partner ⚡</div>
+          <div class="gm-by">— Kishore</div>
+        </div>
+        <div class="div"></div>
+        <div class="chat" data-animate="true">
+          <div class="row k">
+            <div>
+              <div class="bname r">Kishore</div>
+              <div class="bubble bk">Travelling epdi poitu iruku — Poguthu, Manasu than kastama irku 😌<br>Goa ah vittu
+                varen la 😅</div>
+              <div class="btime r">Jan 26, 2025</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bname">Harini</div>
+              <div class="bubble bh">Enna miss panra anga 😊</div>
+              <div class="btime">18:27</div>
+            </div>
+          </div>
+          <div class="row k">
+            <div>
+              <div class="bubble bk">Ellame miss pandren — Semmaya irunchu thryuma 😌</div>
+              <div class="btime r">18:28</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bubble bh">Ahhaaa 😂 Nee TVL ke kootitu pogala 😂😂</div>
+              <div class="btime">18:30</div>
+            </div>
+          </div>
+        </div>
+        <div class="div"></div>
+        <!-- INNER VOICE -->
+        <div class="inner-voice">
+          <div class="iv-label">13 January 2025 · Internal Monologue</div>
+          <div class="iv-text">"En aal amaithiya en manasu kulla irukaru — avara yen inga ilukura"</div>
+          <div class="iv-tr">My person is sitting so quietly inside my heart — why am I pulling him here?</div>
+          <div class="iv-date">Harini · talking to herself</div>
+        </div>
+        <div class="div"></div>
+        <!-- MY BLISS -->
+        <div
+          style="max-width:min(440px,94vw);margin:1.25rem auto;border-radius:18px;padding:1.6rem;text-align:center;background:rgba(255,230,150,.025);border:1px solid rgba(255,230,150,.08)">
+          <div class="gm-lbl"
+            style="color:rgba(255,230,130,.4);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;margin-bottom:.6rem">
+            5 August 2024 · Repeated ≥15 times · Never explained</div>
+          <div
+            style="font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.8rem,5vw,2.4rem);margin-bottom:.35rem;color:rgba(255,235,160,.85)">
+            "My bliss"</div>
+          <div style="font-size:.65rem;color:rgba(255,255,255,.28);letter-spacing:.1em">— Harini, every time she felt it
+          </div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.2);margin-top:.7rem;line-height:1.6">After a Good
+            Morning. After a laugh. After nothing in particular.<br>She just felt it — and said it.</div>
+        </div>
+        <div class="div"></div>
+        <div class="chat" data-animate="true">
+          <div class="row h">
+            <div>
+              <div class="bname">Harini</div>
+              <div class="bubble bh">Enaku epa paada pora</div>
+              <div class="btime">Apr 14, 2026 · 20:35</div>
+            </div>
+          </div>
+          <div class="row k">
+            <div>
+              <div class="bname r">Kishore</div>
+              <div class="bubble bk">Ithuve unaku paadunathu than</div>
+              <div class="btime r">20:50</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bubble bh">Enaku paaduniya</div>
+              <div class="btime">21:49</div>
+            </div>
+          </div>
+          <div class="row k">
+            <div>
+              <div class="bubble bk">Ama 😂</div>
+              <div class="btime r">22:34</div>
+            </div>
+          </div>
+        </div>
+        <div class="div"></div>
+        <div class="chat" data-animate="true">
+          <div class="row k">
+            <div>
+              <div class="bname r">Kishore</div>
+              <div class="bubble bk">Chaaa proud ah feel pandren 😌<br>Nermai yin sigaram!</div>
+              <div class="btime r">Apr 11, 2026 · 19:30</div>
+            </div>
+          </div>
+          <div class="row h">
+            <div>
+              <div class="bname">Harini</div>
+              <div class="bubble bh">Apdilam onnu illa pa 😊<br>Nee nalla paiyan nu — athulam theriyum</div>
+              <div class="btime">Apr 14, 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 5b · INNER VOICE ██ -->
+    <section class="innervoice" id="s5b">
+      <div class="iv-glow"></div>
+      <div class="orb" data-depth="2"
+        style="width:600px;height:600px;background:rgba(255,160,60,.04);top:30%;right:-10%"></div>
+      <div class="inner iv-inner" id="i5b">
+        <div class="tag">13 January 2025 · Rare</div>
+        <h2 class="sh" style="margin-bottom:.5rem">Her Rarest<br><em>Inner Voice</em></h2>
+        <p class="body" style="font-size:.76rem;margin-bottom:1rem">She didn't say this to him directly.<br>She said it
+          to herself. Out loud. In Tamil. Which makes it the most honest thing she ever wrote.</p>
+        <div class="iv-tamil">"En aal amaithiya en manasu kulla irukaru —<br>avara yen inga ilukura"</div>
+        <div class="iv-en">My person is sitting so quietly inside my heart —<br>why am I pulling him here?</div>
+        <div class="iv-date">Harini · January 13, 2025</div>
+        <div class="div"></div>
+        <p class="body" style="font-size:.76rem;color:rgba(255,200,130,.28);font-style:italic;max-width:420px">"En aal"
+          — my person. Not "a person." Not "someone." Her person. She already knew. She was just catching up to what her
+          heart had decided months ago.</p>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 6 · STATS ██ -->
+    <section class="sec" id="s6">
+      <div class="inner" id="i6">
+        <div class="tag">By The Numbers</div>
+        <h2 class="sh">What <em>808 Days</em><br>Actually Look Like</h2>
+        <p class="body">You can't measure a love story in numbers. But you can try. And these numbers are extraordinary.
+        </p>
+        <div class="stats" id="stats-grid">
+          <div class="stat" style="opacity:0"><span class="snum" id="sn0">0</span>
+            <div class="slbl">Total Messages</div>
+          </div>
+          <div class="stat" style="opacity:0"><span class="snum" id="sn1">0</span>
+            <div class="slbl">Days Chatting</div>
+          </div>
+          <div class="stat" style="opacity:0"><span class="snum" id="sn2">0</span>
+            <div class="slbl">Per Day Average</div>
+          </div>
+          <div class="stat" style="opacity:0"><span class="snum" id="sn3">0</span>
+            <div class="slbl">😂 Laughs Sent</div>
+          </div>
+          <div class="stat" style="opacity:0"><span class="snum" id="sn4">0</span>
+            <div class="slbl">Good Mornings</div>
+          </div>
+          <div class="stat" style="opacity:0"><span class="snum" id="sn5">0</span>
+            <div class="slbl">Good Nights</div>
+          </div>
+          <div class="stat" style="opacity:0"><span class="snum" id="sn6">0</span>
+            <div class="slbl">"Paathukalam"s</div>
+          </div>
+          <div class="stat" style="opacity:0"><span class="snum" id="sn7">0</span>
+            <div class="slbl">Times Said "Seri"</div>
+          </div>
+        </div>
+        <div class="stats grid-3" style="margin-top:1rem" id="stats-grid2">
+          <div class="stat" style="opacity:0"><span class="snum" id="sn8">0</span>
+            <div class="slbl">Photos &amp; Media</div>
+          </div>
+          <div class="stat" style="opacity:0"><span class="snum" id="sn9">0</span>
+            <div class="slbl">Times "Partner"</div>
+          </div>
+          <div class="stat" style="opacity:0"><span class="snum">∞</span>
+            <div class="slbl">Reasons to Stay</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 7 · GROWTH CHART ██ -->
+    <section class="sec" id="s7">
+      <div class="inner" id="i7">
+        <div class="tag">The Growth Chart</div>
+        <h2 class="sh">How Their Story<br><em>Grew Over Time</em></h2>
+        <p class="body">Every bar is a month. Every month is a chapter. Watch the spark become a flame.</p>
+        <div class="chart-wrap"><canvas id="chart" height="320"></canvas></div>
+        <div class="chart-legend">
+          <div class="cl-item">
+            <div class="cl-dot" style="background:rgba(147,197,253,.8)"></div>Monthly Messages
+          </div>
+          <div class="cl-item">
+            <div class="cl-dot" style="background:rgba(255,90,110,.8)"></div>Key Milestones ✨
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 8 · HEATMAP ██ -->
+    <section class="sec" id="s8">
+      <div class="inner" id="i8">
+        <div class="tag">808 Days of Conversations</div>
+        <h2 class="sh">They Never<br><em>Stopped</em></h2>
+        <p class="body">Like a GitHub contribution graph, but for love. Every cell is a day. Darker = more messages.
+          They talked on 808 out of ~900 days.</p>
+        <div id="heatmap-container"></div>
+        <div class="hm-legend">
+          <span>Less</span>
+          <div class="hml-row">
+            <div class="hm-cell" style="background:rgba(147,197,253,.08)"></div>
+            <div class="hm-cell" style="background:rgba(147,197,253,.2)"></div>
+            <div class="hm-cell" style="background:rgba(147,197,253,.4)"></div>
+            <div class="hm-cell" style="background:rgba(147,197,253,.65)"></div>
+            <div class="hm-cell" style="background:rgba(147,197,253,.9)"></div>
+          </div>
+          <span>More</span>
+        </div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 9 · WHO TALKS MORE ██ -->
+    <section class="sec" id="s9">
+      <div class="inner" id="i9">
+        <div class="tag">Who Talks More</div>
+        <h2 class="sh">Almost <em>Perfectly</em><br>Equal</h2>
+        <p class="body">They each sent nearly half of all messages. That's not coincidence — that's both of them
+          equally, fully in it.</p>
+        <div class="wtm">
+          <div class="wtm-row">
+            <div class="wtm-label"><span>Kishore Kumar Subramanian</span><span>93,633 messages</span></div>
+            <div class="wtm-bar-bg">
+              <div class="wtm-bar" id="bar-k"
+                style="background:linear-gradient(to right,rgba(147,197,253,.6),rgba(147,197,253,.9))">
+                <span>51.7%</span>
+              </div>
+            </div>
+          </div>
+          <div class="wtm-row">
+            <div class="wtm-label"><span>Harini</span><span>87,687 messages</span></div>
+            <div class="wtm-bar-bg">
+              <div class="wtm-bar" id="bar-h"
+                style="background:linear-gradient(to right,rgba(255,180,100,.6),rgba(255,180,100,.9))">
+                <span>48.3%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="body" style="margin-top:2rem;font-size:.82rem">A 3.4% gap across 181,320 messages over 808 days. Two
+          people who showed up equally, every single day.</p>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 10 · WORD CLOUD ██ -->
+    <section class="sec" id="s10">
+      <div class="inner" id="i10">
+        <div class="tag">The Language of Us</div>
+        <h2 class="sh">Words They Made<br><em>Their Own</em></h2>
+        <p class="body">These aren't just words. They're their language — built over 808 days of conversation.</p>
+        <div class="wcloud" id="wcloud"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem;max-width:700px;margin:1.5rem auto;justify-content:center"
+          id="word-list"></div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 11 · NIGHT OWL ██ -->
+    <section class="nightowl" id="s11">
+      <div class="orb" data-depth="1"
+        style="width:700px;height:700px;background:rgba(60,80,160,.07);top:50%;left:50%;transform:translate(-50%,-50%)">
+      </div>
+      <div class="inner" id="i11" style="text-align:center">
+        <div class="tag">After Hours</div>
+        <div class="clock">
+          <div class="clock-face">
+            <div class="hand h-hour"></div>
+            <div class="hand h-min"></div>
+            <div class="hand h-sec"></div>
+            <div class="h-center"></div>
+          </div>
+        </div>
+        <div class="owl-big">297</div>
+        <div class="owl-lbl">Times Kishore Texted Her After Midnight</div>
+        <div class="div"></div>
+        <div class="owl-line">"Apo than ma network kidaikum — Ipo than room ke varen"</div>
+        <div style="font-size:.65rem;color:rgba(255,255,255,.22);margin-top:.3rem;letter-spacing:.1em">— 2:05 AM, 19 May
+          2025</div>
+        <div class="div"></div>
+        <div class="owl-line" style="font-size:clamp(.78rem,2vw,1rem);color:rgba(255,255,255,.3)">She replied to every
+          single one. 11PM–3AM was their second shift. Sleep was optional. This conversation wasn't.</div>
+        <div class="div"></div>
+        <p class="body" style="margin-bottom:0">43,380 late-night messages. He sent 22,545. The hostel was quiet. The
+          chat never was. On some nights they talked until the WiFi cut out. On others, until one of them finally typed
+          "Good night 😴 Byeee 👋" and meant it reluctantly.</p>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 12 · QUOTES ██ -->
+    <section class="sec" id="s12">
+      <div class="inner" id="i12">
+        <div class="tag">Words That Stayed</div>
+        <h2 class="sh">Things They Said<br>That <em>Never Left</em></h2>
+        <div class="qwall">
+          <div class="qcard">
+            <div class="qt">"Harini Harini nu thudikutham"</div>
+            <div class="qtr">My heartbeat says your name</div>
+            <div class="qmeta">Kishore · Nov 3, 2024 · 15:33</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"Na solravan, unakaaga ratham sindhi kooda eluthuvan"</div>
+            <div class="qtr">I would write with my own blood for you</div>
+            <div class="qmeta">Kishore · Nov 3, 2024</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"My bliss"</div>
+            <div class="qtr">Two words. No explanation needed. She just felt it and said it — at least 15 times across
+              2024.</div>
+            <div class="qmeta">Harini · Aug 2024 → Dec 2024</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"Good morning partner ✨"</div>
+            <div class="qtr">Every morning · 533 times · without exception · always her first</div>
+            <div class="qmeta">Harini · April 2024 → Present</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"Ithuve unaku paadunathu than"</div>
+            <div class="qtr">This song was always for you — said two and a half years in, on a quiet Tuesday night</div>
+            <div class="qmeta">Kishore · April 14, 2026 · 20:50</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"Nee nalla paiyan nu — athulam theriyum"</div>
+            <div class="qtr">You're a good person. I just know. She said it like it wasn't even a question.</div>
+            <div class="qmeta">Harini · April 2026</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"Ellame miss pandren — Semmaya irunchu thryuma"</div>
+            <div class="qtr">Texted from Goa. She laughed. He meant every word.</div>
+            <div class="qmeta">Kishore · Jan 26, 2025</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"Chaaa proud ah feel pandren"</div>
+            <div class="qtr">She wrote her own exam honestly — and he was the first person she told. He was proud before
+              she finished her sentence.</div>
+            <div class="qmeta">Kishore · April 11, 2026</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"Avara kasta padutha en manasu ethukathu"</div>
+            <div class="qtr">She said it while playing coy about who "avara" even was. But her heart already knew — and
+              it was protecting him before she'd admitted it.</div>
+            <div class="qmeta">Harini · Nov 3, 2024 · 15:37</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"En aal amaithiya en manasu kulla irukaru — avara yen inga ilukura"</div>
+            <div class="qtr">She said it to herself. In Tamil. In the dark. Not to him — just the quiet acknowledgment
+              that her heart had already made a decision she hadn't caught up to yet.</div>
+            <div class="qmeta">Harini · January 13, 2025</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"Athula avan thappu ethum illa — na dhan ipdi maathiten"</div>
+            <div class="qtr">In his fault was nothing. She had changed. She said it out loud. Once. To him. That takes a
+              rare kind of honesty.</div>
+            <div class="qmeta">Harini · October 26, 2024</div>
+          </div>
+          <div class="qcard">
+            <div class="qt">"Nermai yin sigaram!"</div>
+            <div class="qtr">She went to the exam sick, without studying, and wrote honestly without cheating. He called
+              her the pinnacle of honesty. Twice. Because once wasn't enough.</div>
+            <div class="qmeta">Kishore · April 11, 2026</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="sep"></div>
+
+    <!-- ██ 13 · FINALE ██ -->
+    <section class="finale" id="s13">
+      <div class="petal-stage" id="petal-stage"></div>
+      <div class="orb" data-depth="1"
+        style="width:1000px;height:1000px;background:rgba(255,155,80,.045);top:50%;left:50%;transform:translate(-50%,-50%)">
+      </div>
+      <div class="inner" id="i13" style="text-align:center;position:relative;z-index:1">
+        <div class="tag">A Letter · Nov 2023 → Always</div>
+        <h2 class="sh" style="margin-bottom:2.5rem">From Lab Partners<br>to <em>Life Partners</em></h2>
+        <p class="body" style="font-style:italic;color:rgba(255,255,255,.25);font-size:.78rem">Thambi. Madam. Partner.
+          My bliss. — every name they ever had for each other, in the right order.</p>
+        <div class="letter" id="letter-box">
+          <div class="letter-content" id="letter-content"></div>
+          <span class="sig" id="letter-sig">— Kishore</span>
+        </div>
+        <p class="fin-date">November 25, 2023 &nbsp;·&nbsp; Still Writing &nbsp;·&nbsp; April 2026</p>
+      </div>
+    </section>
+
+  </div><!-- /wrap -->
+
+  <script>
+    // ═══════════════════════════════════════════════════════
+    // DATA
+    // ═══════════════════════════════════════════════════════
+    const MONTHLY = [
+      { m: 'Nov 23', v: 35, note: 'First spark ✨' }, { m: 'Dec 23', v: 9764, note: '279× explosion 🚀' },
+      { m: 'Jan 24', v: 6610 }, { m: 'Feb 24', v: 5746 }, { m: 'Mar 24', v: 8860 },
+      { m: 'Apr 24', v: 12917, note: 'First "Partner" 💛' }, { m: 'May 24', v: 16421, note: 'Peak month 🔥' },
+      { m: 'Jun 24', v: 6972 }, { m: 'Jul 24', v: 7511 }, { m: 'Aug 24', v: 7650, note: '"My bliss" 🌤️' },
+      { m: 'Sep 24', v: 8577 }, { m: 'Oct 24', v: 4736 }, { m: 'Nov 24', v: 10348, note: 'The Confession 💓' },
+      { m: 'Dec 24', v: 6191 }, { m: 'Jan 25', v: 5207, note: 'Goa trip 🌊' }, { m: 'Feb 25', v: 6616 }, { m: 'Mar 25', v: 9588 },
+      { m: 'Apr 25', v: 6056 }, { m: 'May 25', v: 8175 }, { m: 'Jun 25', v: 3914 },
+      { m: 'Aug 25', v: 3363 }, { m: 'Sep 25', v: 2760 }, { m: 'Oct 25', v: 3353 },
+      { m: 'Nov 25', v: 7035 }, { m: 'Dec 25', v: 1426 }, { m: 'Jan 26', v: 1103 },
+      { m: 'Feb 26', v: 3476 }, { m: 'Mar 26', v: 5573 }, { m: 'Apr 26', v: 1341, note: 'Still singing 🎵' }
+    ];
+    const WORDS = [
+      { w: 'Seri', c: 11043 }, { w: 'Paathukalam', c: 1746 }, { w: 'Ahhaaa', c: 519 },
+      { w: 'Partner', c: 864 }, { w: 'Amma', c: 6591 }, { w: 'Nalla', c: 2699 },
+      { w: 'Okay', c: 3509 }, { w: 'Thambi', c: 280 }, { w: 'Arumai', c: 890 },
+      { w: 'Aprm', c: 3339 }, { w: 'Super', c: 1200 }, { w: 'Byeee', c: 1017 },
+      { w: 'Good Night', c: 1305 }, { w: '😂', c: 36341 }, { w: 'Illa', c: 3880 },
+      { w: 'My bliss', c: 15 }, { w: 'Miss', c: 420 }, { w: 'Madam', c: 190 },
+    ];
+    const COUNTERS = [
+      { id: 'sn0', v: 181320, sfx: '+' }, { id: 'sn1', v: 808, sfx: '' }, { id: 'sn2', v: 224, sfx: '/day' },
+      { id: 'sn3', v: 36341, sfx: '+' }, { id: 'sn4', v: 980, sfx: '+' }, { id: 'sn5', v: 1305, sfx: '+' },
+      { id: 'sn6', v: 1746, sfx: '+' }, { id: 'sn7', v: 11043, sfx: '+' },
+      { id: 'sn8', v: 2425, sfx: '+' }, { id: 'sn9', v: 864, sfx: '+' }
+    ];
+    const LETTER_PARAS = [
+      "You asked about Air Wedge calculations on a Thursday afternoon and I sent you lab notes within 8 minutes. Neither of us knew what we were starting.",
+      "The same night you first said Good Night, I said 'Paathukalam' for the first time. We thought we were talking about a Kamal dialogue. We didn't know we were writing our own.",
+      "It grew in December — 279 times louder than the month before. In late-night physics doubts. In thambi becoming partner. In vegetable biryani that needed a microscope to find the vegetables, in 10 alarms I'd set and ignore every morning.",
+      "One April evening I said 'Okay Partner 😂' — half-joking, testing the weight of it. You said 'Seringa partner' and somehow that was enough. The next morning at 7:14 I typed 'Good Morning Partner' and sent it before I could think too much. You replied at 7:43. We never stopped.",
+      "In August you sent two words after my good morning: 'My bliss.' I asked what that meant. You said it wasn't a replacement — it was the same thing. You kept sending it. September. October. November. No explanation. That was the most honest thing I ever heard.",
+      "On an October Tuesday you sent me a kutty kathai — a little story you never planned to tell. You said I talked to you daily. You said I understood what you needed without being asked. You said the fault was yours, not mine. Harini — there is no fault. You just noticed something real.",
+      "On November 3rd, I spent two hours hinting at a mystery person — someone whose heartbeat said your name. You guessed at strangers. You never guessed me. Then I said it. You laughed. You said I was teasing. And then — quietly — you said 'Avara kasta padutha en manasu ethukathu.' You were protecting someone without admitting his name. That someone was me.",
+      "In January you wrote something to yourself — not to me. You said your person was sitting quietly inside your heart. You asked yourself why you were pulling him here. Harini. I don't know if you meant me to read that. But I did. And I understand why you asked.",
+      "From Goa I texted you 'Ellame miss pandren.' You laughed and asked why I didn't take you along. But you knew. And I knew you knew.",
+      "On April 14, 2026, you asked when I was going to sing for you. I said the song I was already singing — it was always for you. You asked 'Enaku paaduniya?' I said yes. You said good night. I said it back. That's how every chapter of us ends. And starts again.",
+      "Now, every morning begins with 'Good morning partner ✨' — and every night ends with 'Good night 😴 Byeee 👋'. That's 808 days of choosing to start and end each day with you.",
+      "This is all of it — the lab notes, the late nights, the biryani jokes, the kutty kathai, the quiet January confession, the heartbeat that said your name. Every paathukalam. Every partner. It was always this."
+    ];
+    const NAV_ITEMS = [
+      { i: 0, label: 'The Beginning' }, { i: 1, label: 'The Explosion' }, { i: 3, label: 'Timeline' },
+      { i: '3c', label: 'Her Kutty Kathai' }, { i: 4, label: 'The Heartbeat' },
+      { i: '5b', label: 'Inner Voice' }, { i: 6, label: 'By The Numbers' }, { i: 11, label: 'Night Owl' }, { i: 13, label: 'The Letter' }
+    ];
+
+    // ═══════════════════════════════════════════════════════
+    // UTILS
+    // ═══════════════════════════════════════════════════════
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    function lerp(a, b, t) { return a + (b - a) * t }
+    const isMobile = () => 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // ═══════════════════════════════════════════════════════
+    // NAV DOTS (7 key sections)
+    // ═══════════════════════════════════════════════════════
+    const ndots = document.getElementById('ndots');
+    NAV_ITEMS.forEach(({ i, label }) => {
+      const d = document.createElement('div');
+      d.className = 'nd'; d.dataset.i = i;
+      d.innerHTML = `<div class="nd-tip">${label}</div>`;
+      d.addEventListener('click', () => {
+        const s = document.getElementById('s' + i);
+        if (s) s.scrollIntoView({ behavior: 'smooth' });
+      });
+      ndots.appendChild(d);
+    });
+
+    // ═══════════════════════════════════════════════════════
+    // STARFIELD
+    // ═══════════════════════════════════════════════════════
+    const cnv = document.getElementById('stars');
+    const ctx = cnv.getContext('2d');
+    let stars = [], SW, SH;
+    function resizeStars() {
+      SW = cnv.width = window.innerWidth; SH = cnv.height = window.innerHeight;
+      buildStars();
+    }
+    function buildStars() {
+      stars = [];
+      const n = Math.min(Math.floor(SW * SH / 4000) + 60, isMobile() ? 120 : 250);
+      for (let i = 0; i < n; i++) stars.push({
+        x: Math.random() * SW, y: Math.random() * SH,
+        r: Math.random() * 1.3 + .2, op: Math.random() * .6 + .1,
+        tp: Math.random() * Math.PI * 2, ts: Math.random() * .015 + .005, warm: Math.random() < .4
+      });
+    }
+    let warmth = 0;
+    function drawStars() {
+      ctx.clearRect(0, 0, SW, SH);
+      stars.forEach(s => {
+        s.tp += s.ts;
+        const tw = .5 + .5 * Math.sin(s.tp);
+        let op = s.warm ? warmth * s.op * tw : s.op * tw * (1 - warmth * .5);
+        if (op < .03) return;
+        const r = s.warm ? 255 : 210, g = s.warm ? Math.round(175 + 70 * (1 - warmth)) : 218, b = s.warm ? Math.round(70 + 180 * (1 - warmth)) : 255;
+        ctx.save(); ctx.globalAlpha = op; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgb(${r},${g},${b})`; ctx.fill(); ctx.restore();
+      });
+      requestAnimationFrame(drawStars);
+    }
+    window.addEventListener('resize', resizeStars);
+    resizeStars(); requestAnimationFrame(drawStars);
+
+    // ═══════════════════════════════════════════════════════
+    // WARMTH ENGINE
+    // ═══════════════════════════════════════════════════════
+    const STOPS = [
+      { w: 0, bg: [8, 12, 26], ac: [147, 197, 253] }, { w: .2, bg: [8, 14, 18], ac: [100, 220, 160] },
+      { w: .38, bg: [14, 12, 8], ac: [251, 191, 36] }, { w: .52, bg: [20, 6, 8], ac: [248, 113, 113] },
+      { w: .68, bg: [18, 12, 4], ac: [251, 146, 60] }, { w: .82, bg: [16, 10, 8], ac: [253, 164, 175] },
+      { w: 1, bg: [14, 8, 10], ac: [253, 164, 175] }
+    ];
+    function colorAt(w) {
+      for (let i = 0; i < STOPS.length - 1; i++) {
+        const s1 = STOPS[i], s2 = STOPS[i + 1];
+        if (w >= s1.w && w <= s2.w) {
+          const t = (w - s1.w) / (s2.w - s1.w);
+          return {
+            bg: s1.bg.map((c, j) => Math.round(lerp(c, s2.bg[j], t))),
+            ac: s1.ac.map((c, j) => Math.round(lerp(c, s2.ac[j], t)))
+          };
+        }
+      }
+      return STOPS[STOPS.length - 1];
+    }
+    let curW = 0, targW = 0;
+    function warmthLoop() {
+      curW += (targW - curW) * .035; warmth = curW;
+      const { bg, ac } = colorAt(curW);
+      document.body.style.background = `rgb(${bg[0]},${bg[1]},${bg[2]})`;
+      const acStr = `rgb(${ac[0]},${ac[1]},${ac[2]})`;
+      document.documentElement.style.setProperty('--ac', acStr);
+      document.documentElement.style.setProperty('--ac-r', ac[0]);
+      document.documentElement.style.setProperty('--ac-g', ac[1]);
+      document.documentElement.style.setProperty('--ac-b', ac[2]);
+      requestAnimationFrame(warmthLoop);
+    }
+    requestAnimationFrame(warmthLoop);
+
+    // ═══════════════════════════════════════════════════════
+    // CUSTOM CURSOR + SPARKLE TRAIL (desktop only)
+    // ═══════════════════════════════════════════════════════
+    if (!isMobile()) {
+      const cursor = document.getElementById('cursor');
+      const cursorRing = document.getElementById('cursor-ring');
+      const sparkCnv = document.getElementById('sparkle-canvas');
+      const sCtx = sparkCnv.getContext('2d');
+      let cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+      let rx = cx, ry = cy;
+      const particles = [];
+
+      function resizeSparkle() {
+        sparkCnv.width = window.innerWidth; sparkCnv.height = window.innerHeight;
+      }
+      resizeSparkle();
+      window.addEventListener('resize', resizeSparkle);
+
+      document.addEventListener('mousemove', e => {
+        cx = e.clientX; cy = e.clientY;
+        // Spawn particles
+        if (Math.random() < .35) {
+          const shapes = ['♡', '✦', '·', '★', '✧'];
+          particles.push({
+            x: cx, y: cy, vx: (Math.random() - .5) * 1.8, vy: (Math.random() - 1.2) * 1.5,
+            life: 1, decay: .022 + Math.random() * .018, size: 8 + Math.random() * 6,
+            char: shapes[Math.floor(Math.random() * shapes.length)]
+          });
+        }
+      });
+
+      function drawSparkles() {
+        sCtx.clearRect(0, 0, sparkCnv.width, sparkCnv.height);
+        const acR = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ac-r') || '147');
+        const acG = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ac-g') || '197');
+        const acB = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ac-b') || '253');
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx; p.y += p.vy; p.vy += .06; p.life -= p.decay;
+          if (p.life <= 0) { particles.splice(i, 1); continue; }
+          sCtx.save();
+          sCtx.globalAlpha = p.life * .7;
+          sCtx.fillStyle = `rgba(${acR},${acG},${acB},1)`;
+          sCtx.font = `${p.size}px serif`;
+          sCtx.textAlign = 'center'; sCtx.textBaseline = 'middle';
+          sCtx.fillText(p.char, p.x, p.y);
+          sCtx.restore();
+        }
+        // Cursor follow
+        rx += (cx - rx) * .18; ry += (cy - ry) * .18;
+        cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+        cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px';
+        // Update cursor color
+        const acStr = getComputedStyle(document.documentElement).getPropertyValue('--ac').trim();
+        cursor.style.background = acStr.replace(')', ', .6)').replace('rgb', 'rgba');
+        cursorRing.style.borderColor = acStr.replace(')', ', .3)').replace('rgb', 'rgba');
+        requestAnimationFrame(drawSparkles);
+      }
+      requestAnimationFrame(drawSparkles);
+
+      // Cursor hover effects
+      document.addEventListener('mouseover', e => {
+        const t = e.target;
+        if (t.matches('a,button,.joke,.qcard,.stat,.bubble,.nd')) {
+          cursor.style.width = '28px'; cursor.style.height = '28px';
+          cursorRing.style.transform = 'translate(-50%,-50%) scale(1.5)';
+        }
+      });
+      document.addEventListener('mouseout', () => {
+        cursor.style.width = '18px'; cursor.style.height = '18px';
+        cursorRing.style.transform = 'translate(-50%,-50%) scale(1)';
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // PARALLAX ORBS (desktop only)
+    // ═══════════════════════════════════════════════════════
+    if (!isMobile()) {
+      let mxN = 0, myN = 0, orbX = 0, orbY = 0;
+      document.addEventListener('mousemove', e => {
+        mxN = e.clientX / window.innerWidth - .5;
+        myN = e.clientY / window.innerHeight - .5;
+      });
+      function orbLoop() {
+        orbX += (mxN - orbX) * .04; orbY += (myN - orbY) * .04;
+        document.querySelectorAll('.orb[data-depth]').forEach(orb => {
+          const d = parseFloat(orb.dataset.depth || 1);
+          orb.style.transform = `translate(${orbX * 28 * d}px,${orbY * 28 * d}px)`;
+        });
+        requestAnimationFrame(orbLoop);
+      }
+      requestAnimationFrame(orbLoop);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // BACKGROUND MUSIC
+    // ═══════════════════════════════════════════════════════
+    const bgm = document.getElementById('bgm');
+    let audioStarted = false;
+    function startAudio() {
+      if (audioStarted) return;
+      audioStarted = true;
+
+      const ls = document.getElementById('launch-screen');
+      if (ls) ls.classList.add('hidden');
+
+      document.documentElement.style.overflowY = 'auto';
+      document.documentElement.style.overflowX = 'hidden';
+      document.body.style.overflowY = 'auto';
+      document.body.style.overflowX = 'hidden';
+
+      if (!bgm) return;
+      bgm.volume = 0;
+      bgm.play().then(() => {
+        let vol = 0;
+        const fade = setInterval(() => {
+          vol += .05;
+          if (vol >= .4) { bgm.volume = .4; clearInterval(fade) } else { bgm.volume = vol }
+        }, 200);
+      }).catch(() => { });
+    }
+    const lsInit = document.getElementById('launch-screen');
+    if (lsInit) {
+      lsInit.addEventListener('click', startAudio, { once: true });
+      lsInit.addEventListener('touchstart', startAudio, { once: true, passive: true });
+    }
+    function playSound() { }
+
+    // ═══════════════════════════════════════════════════════
+    // CHAT ANIMATOR
+    // ═══════════════════════════════════════════════════════
+    const chatsDone = new WeakSet();
+    async function animateChat(chatEl) {
+      if (chatsDone.has(chatEl)) return;
+      chatsDone.add(chatEl);
+      const rows = Array.from(chatEl.querySelectorAll(':scope > .row'));
+      rows.forEach(r => { r.style.opacity = '0'; r.style.visibility = 'hidden'; r.style.transform = 'translateY(6px)'; });
+      for (const row of rows) {
+        const isK = row.classList.contains('k');
+        // typing indicator
+        const ti = document.createElement('div');
+        ti.className = 'typing-ind ' + (isK ? 'right' : 'left');
+        ti.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+        chatEl.insertBefore(ti, row);
+        await sleep(520);
+        ti.remove();
+        // show bubble
+        row.style.visibility = 'visible';
+        row.style.transition = 'opacity .28s,transform .28s';
+        row.style.opacity = '1'; row.style.transform = 'none';
+        playSound();
+        await sleep(420);
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // CONFESSION COUNTDOWN
+    // ═══════════════════════════════════════════════════════
+    let confDone = false;
+    async function runConfessionCountdown() {
+      if (confDone) return; confDone = true;
+      const dateEl = document.getElementById('conf-date');
+      const timeEl = document.getElementById('conf-time');
+      const confContent = document.getElementById('conf4');
+      const ecg = document.getElementById('ecg-wrap');
+      // show date
+      await sleep(1200);
+      dateEl.style.animation = 'dateReveal .8s ease forwards';
+      await sleep(900);
+      // show time
+      timeEl.style.animation = 'timeReveal .6s ease forwards';
+      await sleep(1400);
+      // ECG flatline effect
+      ecg.style.animation = 'none';
+      ecg.style.transition = 'opacity .3s';
+      ecg.style.opacity = '.2';
+      await sleep(600);
+      ecg.style.opacity = '1';
+      ecg.style.animation = '';
+      await sleep(300);
+      // show content
+      confContent.classList.add('show');
+      // shimmer the quotes
+      await sleep(900);
+      const shimmerTargets = confContent.querySelectorAll('.shimmer-target');
+      shimmerTargets.forEach((el, i) => {
+        setTimeout(() => el.classList.add('do-shimmer'), i * 600);
+      });
+      // animate chat
+      const chat = confContent.querySelector('.chat[data-animate]');
+      if (chat) {
+        await sleep(800);
+        animateChat(chat);
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // TIMELINE SCROLL-DRAW
+    // ═══════════════════════════════════════════════════════
+    const tlLine = document.getElementById('tl-line');
+    const tlNodes = Array.from(document.querySelectorAll('.tnode'));
+    const tlSection = document.getElementById('s3');
+    function updateTimeline() {
+      if (!tlSection) return;
+      const rect = tlSection.getBoundingClientRect();
+      const tl = document.getElementById('timeline');
+      if (!tl) return;
+      const tlRect = tl.getBoundingClientRect();
+      const viewH = window.innerHeight;
+      // Progress through timeline
+      const progress = Math.max(0, Math.min(1, (viewH * .7 - tlRect.top) / tlRect.height));
+      tlLine.style.height = (progress * 100) + '%';
+      // Reveal nodes
+      const totalH = tl.offsetHeight;
+      tlNodes.forEach((node, i) => {
+        const nodeTop = node.offsetTop;
+        const threshold = nodeTop / totalH;
+        if (progress > threshold - .05) {
+          setTimeout(() => node.classList.add('tl-in'), i * 60);
+        }
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // SCROLL HANDLER
+    // ═══════════════════════════════════════════════════════
+    const progEl = document.getElementById('prog');
+    const allNDots = document.querySelectorAll('.nd');
+    window.addEventListener('scroll', () => {
+      const sp = window.scrollY, max = document.body.scrollHeight - innerHeight;
+      const p = Math.min(1, Math.max(0, sp / max));
+      targW = p; progEl.style.width = (p * 100) + '%';
+      // Nav dot highlight
+      const mid = innerHeight * .5;
+      NAV_ITEMS.forEach(({ i }, dotIdx) => {
+        const s = document.getElementById('s' + i); if (!s) return;
+        const r = s.getBoundingClientRect();
+        if (r.top <= mid && r.bottom >= mid) {
+          allNDots.forEach(d => d.classList.remove('on'));
+          if (allNDots[dotIdx]) allNDots[dotIdx].classList.add('on');
+        }
+      });
+      // Timeline
+      updateTimeline();
+    }, { passive: true });
+
+    // ═══════════════════════════════════════════════════════
+    // INTERSECTION OBSERVER
+    // ═══════════════════════════════════════════════════════
+    let chartDone = false, hmDone = false, wtmDone = false, wcloudDone = false, cntDone = false, bigNumDone = false, finaleDone = false, quotesDone = false;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const id = e.target.id || e.target.dataset.id;
+
+        // Generic inner show
+        if (e.target.classList.contains('inner')) e.target.classList.add('show');
+
+        // Big number 279×
+        if (id === 'i1' && !bigNumDone) { bigNumDone = true; animBigNum(); }
+        // Stats
+        if (id === 'i6' && !cntDone) { cntDone = true; animCountersStaggered(); }
+        // Chart
+        if (id === 'i7' && !chartDone) { chartDone = true; setTimeout(drawChart, 300); }
+        // Heatmap
+        if (id === 'i8' && !hmDone) { hmDone = true; buildHeatmap(); }
+        // Bars
+        if (id === 'i9' && !wtmDone) { wtmDone = true; animBars(); }
+        // Word cloud
+        if (id === 'i10' && !wcloudDone) { wcloudDone = true; buildCloud(); }
+        // Confession
+        if (id === 's4') runConfessionCountdown();
+        // Finale
+        if (id === 'i13' && !finaleDone) { finaleDone = true; setTimeout(() => { spawnPetals(); typewriteLetter(); }, 400); }
+        // Quotes shimmer
+        if (id === 'i12' && !quotesDone) { quotesDone = true; shimmerQuotes(); }
+
+        // Chat animation (for non-confession chats)
+        const chats = e.target.querySelectorAll('.chat[data-animate]');
+        chats.forEach(ch => animateChat(ch));
+      });
+    }, { threshold: .12 });
+
+    document.querySelectorAll('.inner').forEach(el => io.observe(el));
+    // Observe confession section
+    const confSec = document.getElementById('s4');
+    if (confSec) {
+      const confIO = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) runConfessionCountdown();
+      }, { threshold: .2 });
+      confIO.observe(confSec);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // BIG NUMBER 279× COUNTER
+    // ═══════════════════════════════════════════════════════
+    function animBigNum() {
+      const el = document.getElementById('bignum');
+      if (!el) return;
+      const dur = 1800, t0 = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(e * 279);
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // STAGGERED COUNTERS
+    // ═══════════════════════════════════════════════════════
+    function animCountersStaggered() {
+      const statEls = [...document.querySelectorAll('#stats-grid .stat, #stats-grid2 .stat')];
+      statEls.forEach((el, i) => {
+        setTimeout(() => {
+          el.style.transition = 'opacity .5s, transform .5s';
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.style.animation = 'countIn .5s ease forwards';
+        }, i * 120);
+      });
+      COUNTERS.forEach(({ id, v, sfx }, i) => {
+        const el = document.getElementById(id); if (!el) return;
+        const dur = 2000, startDelay = i * 120 + 300, t0ref = { t: null };
+        setTimeout(() => {
+          const t0 = performance.now();
+          (function tick(now) {
+            const p = Math.min((now - t0) / dur, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            const n = Math.round(ease * v);
+            el.textContent = (v >= 1000 ? n.toLocaleString() : n) + sfx;
+            if (p < 1) requestAnimationFrame(tick);
+          })(t0);
+        }, startDelay);
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // CHART
+    // ═══════════════════════════════════════════════════════
+    function drawChart() {
+      const canvas = document.getElementById('chart'); if (!canvas) return;
+      const W = Math.max(canvas.offsetWidth, 480); canvas.width = W; canvas.height = 320;
+      const cCtx = canvas.getContext('2d');
+      const pad = { top: 30, right: 20, bottom: 55, left: 55 };
+      const cW = W - pad.left - pad.right, cH = 320 - pad.top - pad.bottom;
+      const max = Math.max(...MONTHLY.map(d => d.v));
+      const bw = cW / MONTHLY.length, bpad = bw * .18;
+      let prog = 0;
+      const acR = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ac-r') || '147');
+      const acG = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ac-g') || '197');
+      const acB = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--ac-b') || '253');
+      function frame() {
+        cCtx.clearRect(0, 0, W, 320);
+        for (let i = 0; i <= 4; i++) {
+          const y = pad.top + cH * (i / 4);
+          cCtx.beginPath(); cCtx.moveTo(pad.left, y); cCtx.lineTo(W - pad.right, y);
+          cCtx.strokeStyle = 'rgba(255,255,255,.05)'; cCtx.lineWidth = 1; cCtx.stroke();
+          const val = Math.round(max * (1 - i / 4) / 1000);
+          cCtx.fillStyle = 'rgba(255,255,255,.28)'; cCtx.font = '10px Josefin Sans';
+          cCtx.textAlign = 'right'; cCtx.fillText(val + 'k', pad.left - 6, y + 4);
+        }
+        MONTHLY.forEach((d, i) => {
+          const x = pad.left + i * bw + bpad, bW = bw - bpad * 2;
+          const fullH = (d.v / max) * cH, h = fullH * Math.min(prog, 1), y = pad.top + cH - h;
+          const isMile = !!d.note;
+          const gr = cCtx.createLinearGradient(x, y + h, x, y);
+          if (isMile) { gr.addColorStop(0, 'rgba(255,90,110,.3)'); gr.addColorStop(1, 'rgba(255,90,110,.85)'); }
+          else { gr.addColorStop(0, `rgba(${acR},${acG},${acB},.15)`); gr.addColorStop(1, `rgba(${acR},${acG},${acB},.7)`); }
+          cCtx.fillStyle = gr; cCtx.beginPath();
+          const rad = Math.min(3, bW / 2);
+          cCtx.moveTo(x + rad, y); cCtx.lineTo(x + bW - rad, y); cCtx.quadraticCurveTo(x + bW, y, x + bW, y + rad);
+          cCtx.lineTo(x + bW, y + h); cCtx.lineTo(x, y + h); cCtx.lineTo(x, y + rad); cCtx.quadraticCurveTo(x, y, x + rad, y);
+          cCtx.closePath(); cCtx.fill();
+          if (prog >= 1) {
+            cCtx.fillStyle = 'rgba(255,255,255,.22)'; cCtx.font = '8px Josefin Sans'; cCtx.textAlign = 'center';
+            const lx = x + bW / 2, ly = pad.top + cH + 14;
+            cCtx.save(); cCtx.translate(lx, ly); cCtx.rotate(-Math.PI / 4); cCtx.fillText(d.m, 0, 0); cCtx.restore();
+            if (isMile) { cCtx.fillStyle = 'rgba(255,90,110,.9)'; cCtx.font = 'bold 10px Josefin Sans'; cCtx.textAlign = 'center'; cCtx.fillText('★', x + bW / 2, y - 8); }
+          }
+        });
+        if (prog < 1) { prog += .025; requestAnimationFrame(frame); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // HEATMAP (wave reveal)
+    // ═══════════════════════════════════════════════════════
+    function buildHeatmap() {
+      const monthlyAvg = {
+        '2023-11': 35 / 4, '2023-12': 9764 / 31, '2024-01': 6610 / 31, '2024-02': 5746 / 29,
+        '2024-03': 8860 / 31, '2024-04': 12917 / 30, '2024-05': 16421 / 31, '2024-06': 6972 / 30,
+        '2024-07': 7511 / 31, '2024-08': 7650 / 31, '2024-09': 8577 / 30, '2024-10': 4736 / 31,
+        '2024-11': 10348 / 30, '2024-12': 6191 / 31, '2025-01': 5207 / 31, '2025-02': 6616 / 28,
+        '2025-03': 9588 / 31, '2025-04': 6056 / 30, '2025-05': 8175 / 31, '2025-06': 3914 / 30,
+        '2025-07': 2 / 31, '2025-08': 3363 / 31, '2025-09': 2760 / 30, '2025-10': 3353 / 31,
+        '2025-11': 7035 / 30, '2025-12': 1426 / 31, '2026-01': 1103 / 31, '2026-02': 3476 / 28,
+        '2026-03': 5573 / 31, '2026-04': 1341 / 15
+      };
+      const peak = Math.max(...Object.values(monthlyAvg));
+      const start = new Date('2023-11-25'), end = new Date('2026-04-15');
+      const s = new Date(start); s.setDate(s.getDate() - s.getDay());
+      const container = document.getElementById('heatmap-container'); container.innerHTML = '';
+      const wrapper = document.createElement('div'); wrapper.className = 'hm-wrap';
+      const grid = document.createElement('div'); grid.className = 'hm-grid';
+      wrapper.appendChild(grid); container.appendChild(wrapper);
+      let cur = new Date(s); const cols = [];
+      while (cur <= end) {
+        const col = document.createElement('div'); col.className = 'hm-col';
+        for (let d = 0; d < 7; d++) {
+          const cell = document.createElement('div'); cell.className = 'hm-cell';
+          const dk = `${cur.getFullYear()}-${String(cur.getMonth() + 1).padStart(2, '0')}`;
+          const avg = monthlyAvg[dk] || 0, intensity = Math.min(1, avg / peak);
+          const inRange = cur >= start && cur <= end;
+          if (!inRange || intensity < .01) { cell.style.background = 'rgba(255,255,255,.04)'; }
+          else {
+            const a = .1 + intensity * .85;
+            cell.style.background = `rgba(147,197,253,${a})`;
+            const msgs = Math.round(avg);
+            const dateStr = cur.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            cell.title = `${dateStr}: ~${msgs} msgs/day avg`;
+          }
+          col.appendChild(cell); cur.setDate(cur.getDate() + 1);
+        }
+        grid.appendChild(col); cols.push(col);
+      }
+      // Wave reveal
+      cols.forEach((col, i) => {
+        setTimeout(() => {
+          col.style.opacity = '1'; col.style.transform = 'scaleY(1)';
+        }, i * 14);
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // WHO TALKS MORE BARS
+    // ═══════════════════════════════════════════════════════
+    function animBars() {
+      const bk = document.getElementById('bar-k'), bh = document.getElementById('bar-h');
+      if (bk) setTimeout(() => { bk.style.width = '100%' }, 100);
+      if (bh) setTimeout(() => { bh.style.width = '93.6%' }, 250);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // WORD CLOUD
+    // ═══════════════════════════════════════════════════════
+    function buildCloud() {
+      const container = document.getElementById('wcloud'), list = document.getElementById('word-list');
+      if (!container) return;
+      const max = WORDS[0].c, positions = [];
+      WORDS.forEach(wd => {
+        const el = document.createElement('div'); el.className = 'ww'; el.textContent = wd.w;
+        const size = Math.round(12 + ((wd.c / max) ** .5) * 34);
+        const opacity = .35 + ((wd.c / max) ** .4) * .6;
+        el.style.cssText = `font-size:${size}px;color:rgba(${130 + Math.round((wd.c / max) * 125)},${180 + Math.round((wd.c / max) * 75)},255,${opacity});animation-duration:${4 + Math.random() * 4}s;animation-delay:${Math.random() * 2}s`;
+        let tries = 0, placed = false, px, py;
+        while (!placed && tries < 60) {
+          px = Math.random() * 75 + 5; py = Math.random() * 70 + 5; placed = true;
+          for (const p of positions) { if (Math.abs(px - p.x) < 14 && Math.abs(py - p.y) < 10) { placed = false; break; } }
+          tries++;
+        }
+        positions.push({ x: px, y: py });
+        el.style.left = px + '%'; el.style.top = py + '%';
+        container.appendChild(el);
+        const tag = document.createElement('div');
+        const r = 130 + Math.round((wd.c / max) * 125), g = 180 + Math.round((wd.c / max) * 75);
+        tag.style.cssText = `background:rgba(${r},${g},255,.08);border:1px solid rgba(${r},${g},255,.2);border-radius:50px;padding:.35rem .9rem;font-size:.7rem;color:rgba(255,255,255,.55)`;
+        tag.innerHTML = `${wd.w} <strong style="color:rgba(${r},${g},255,.9)">${wd.c.toLocaleString()}</strong>`;
+        list.appendChild(tag);
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // INNER VOICE PARTICLES
+    // ═══════════════════════════════════════════════════════
+    function spawnInnerVoiceParticles() {
+      const stage = document.getElementById('s5b'); if (!stage) return;
+      const chars = ['✦', '·', '✧', '♡', '·', '✦'];
+      chars.forEach((c, i) => {
+        const el = document.createElement('div');
+        el.className = 'iv-particle';
+        el.textContent = c;
+        const left = 10 + Math.random() * 80;
+        const dur = 5 + Math.random() * 8;
+        const delay = Math.random() * 10;
+        el.style.cssText = `left:${left}%;bottom:${5 + Math.random() * 30}%;animation-duration:${dur}s;animation-delay:${delay}s;color:rgba(255,200,100,.3)`;
+        stage.appendChild(el);
+      });
+    }
+    spawnInnerVoiceParticles();
+
+    // ═══════════════════════════════════════════════════════
+    // QUOTE SHIMMER
+    // ═══════════════════════════════════════════════════════
+    function shimmerQuotes() {
+      document.querySelectorAll('.qcard').forEach((card, i) => {
+        setTimeout(() => card.classList.add('do-shimmer'), i * 250 + 200);
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // TYPEWRITER LETTER
+    // ═══════════════════════════════════════════════════════
+    async function typewriteLetter() {
+      const content = document.getElementById('letter-content');
+      const sig = document.getElementById('letter-sig');
+      if (!content) return;
+      content.innerHTML = '';
+      const cursorEl = document.createElement('span');
+      cursorEl.className = 'tw-cursor'; cursorEl.textContent = '|';
+      content.appendChild(cursorEl);
+
+      for (let pi = 0; pi < LETTER_PARAS.length; pi++) {
+        const p = document.createElement('p');
+        p.classList.add('tw-done');
+        content.insertBefore(p, cursorEl);
+        if (pi > 0) {
+          const br = document.createElement('br');
+          content.insertBefore(br, p);
+        }
+        const text = LETTER_PARAS[pi];
+        let charIdx = 0;
+        // Type characters
+        while (charIdx < text.length) {
+          p.textContent += text[charIdx];
+          charIdx++;
+          const ch = text[charIdx - 1];
+          const delay = ch === '.' || ch === '—' ? 80 : ch === ',' ? 40 : 14;
+          await sleep(delay);
+        }
+        await sleep(280);
+      }
+      // Remove cursor and show signature
+      cursorEl.remove();
+      await sleep(300);
+      sig.style.opacity = '1';
+      // Small sparkle burst on signature (desktop)
+      if (!isMobile()) {
+        const sigRect = sig.getBoundingClientRect();
+        for (let i = 0; i < 8; i++) {
+          setTimeout(() => {
+            const p = { x: sigRect.left + sigRect.width * .7 + Math.random() * 40 - 20, y: sigRect.top + sigRect.height * .5, vx: (Math.random() - .5) * 3, vy: (Math.random() - 1.5) * 2, life: 1, decay: .025, size: 10, char: '✦' };
+            if (typeof particles !== 'undefined') particles.push(p);
+          }, i * 80);
+        }
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // FLOATING PETALS
+    // ═══════════════════════════════════════════════════════
+    function spawnPetals() {
+      const stage = document.getElementById('petal-stage'); if (!stage) return;
+      stage.innerHTML = '';
+      const petalCount = isMobile() ? 15 : 30;
+      for (let i = 0; i < petalCount; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        const left = 5 + Math.random() * 90;
+        const dur = 8 + Math.random() * 16;
+        const delay = Math.random() * 12;
+        const drift = (Math.random() - .5) * 150 + 'px';
+        const hue = Math.random() < .5 ? 'rgba(255,220,150,1)' : 'rgba(255,180,100,1)';
+        petal.style.cssText = `left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s;--drift:${drift};`;
+        petal.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20"><path d="M10,10 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" fill="${hue}"/></svg>`;
+        stage.appendChild(petal);
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // CLOCK
+    // ═══════════════════════════════════════════════════════
+    (function () {
+      const hh = document.querySelector('.h-hour'), mh = document.querySelector('.h-min');
+      if (hh) hh.style.transform = 'rotate(62.5deg)';
+      if (mh) mh.style.transform = 'rotate(30deg)';
+    })();
+
+    // ═══════════════════════════════════════════════════════
+    // ██ CINEMATIC SYSTEMS ██
+    // ═══════════════════════════════════════════════════════
+
+    // 1. LETTERBOX OPEN —————————————————————————————————————
+    (function () {
+      const t = document.getElementById('lbx-t'), b = document.getElementById('lbx-b');
+      // Brief hold then open — like a film starting
+      setTimeout(() => {
+        if (t) t.classList.add('open');
+        if (b) b.classList.add('open');
+      }, 680);
+    })();
+
+    // 2. FILM GRAIN —————————————————————————————————————————
+    (function () {
+      const c = document.getElementById('grain'); if (!c) return;
+      const ctx = c.getContext('2d');
+      const SZ = isMobile() ? 80 : 128;
+      c.width = SZ; c.height = SZ;
+      const interval = isMobile() ? 160 : 95;
+      let rafId;
+      function tick() {
+        const d = ctx.createImageData(SZ, SZ);
+        const buf = d.data;
+        for (let i = 0; i < buf.length; i += 4) {
+          const v = Math.random() * 255 | 0;
+          buf[i] = buf[i + 1] = buf[i + 2] = v; buf[i + 3] = 255;
+        }
+        ctx.putImageData(d, 0, 0);
+        setTimeout(() => { rafId = requestAnimationFrame(tick); }, interval);
+      }
+      rafId = requestAnimationFrame(tick);
+      // Reduce grain on mobile to save battery
+      if (isMobile()) c.style.opacity = '.032';
+    })();
+
+    // 3. CHAPTER CARDS ————————————————————————————————————
+    const CHAPTER_CARDS = [
+      { section: 's3c', eyebrow: 'Chapter Four', title: 'Kutty Kathai', date: '26 October 2024' },
+      { section: 's4', eyebrow: 'Chapter Five', title: 'The Heartbeat', date: '03 November 2024 · 15:33' },
+      { section: 's5b', eyebrow: 'Chapter Seven', title: 'Inner Voice', date: '13 January 2025' },
+      { section: 's13', eyebrow: 'Epilogue', title: 'A Letter', date: 'November 2023 → Always' },
+    ];
+    const ccCard = document.getElementById('chapter-card');
+    const chaptersDoneSt = new Set();
+    const chapterIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const sid = e.target.id;
+        const ch = CHAPTER_CARDS.find(c => c.section === sid);
+        if (!ch || chaptersDoneSt.has(sid) || !ccCard) return;
+        chaptersDoneSt.add(sid);
+        document.getElementById('cc-eyebrow').textContent = ch.eyebrow;
+        document.getElementById('cc-title').textContent = ch.title;
+        document.getElementById('cc-date').textContent = ch.date;
+        ccCard.classList.add('show');
+        // Fade out after 2.3s
+        setTimeout(() => ccCard.classList.remove('show'), 2300);
+      });
+    }, { threshold: .38, rootMargin: '-5% 0px' });
+    CHAPTER_CARDS.forEach(ch => {
+      const el = document.getElementById(ch.section);
+      if (el) chapterIO.observe(el);
+    });
+
+    // 4. SCENE COUNTER ————————————————————————————————————
+    const SCENE_IDS = ['s0', 's1', 's2', 's3', 's3c', 's4', 's5', 's5b', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13'];
+    const sceneNumEl = document.getElementById('scene-num');
+    function updateSceneCtr() {
+      if (!sceneNumEl) return;
+      const mid = innerHeight * .48;
+      for (let i = 0; i < SCENE_IDS.length; i++) {
+        const el = document.getElementById(SCENE_IDS[i]); if (!el) continue;
+        const r = el.getBoundingClientRect();
+        if (r.top <= mid && r.bottom >= mid) {
+          sceneNumEl.textContent = String(i + 1).padStart(2, '0');
+          break;
+        }
+      }
+    }
+    window.addEventListener('scroll', updateSceneCtr, { passive: true });
+
+    // 5. CONFESSION FLASH ————————————————————————————————
+    const flashEl = document.getElementById('cine-flash');
+    const confFlashIO = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting || !flashEl) return;
+      confFlashIO.disconnect();
+      // White flash on entry — camera strobe
+      setTimeout(() => {
+        flashEl.style.transition = 'opacity .1s';
+        flashEl.style.opacity = '.22';
+        setTimeout(() => {
+          flashEl.style.transition = 'opacity .5s';
+          flashEl.style.opacity = '0';
+        }, 130);
+      }, 900);
+    }, { threshold: .3 });
+    const confSecEl = document.getElementById('s4');
+    if (confSecEl) confFlashIO.observe(confSecEl);
+
+    // 6. HERO TITLE SPLIT ANIMATION ——————————————————————
+    (function () {
+      const el = document.getElementById('hero-title-el'); if (!el) return;
+      // Let the CSS animation fire first (0.6s delay)
+      // Then after it's visible, add the glow shimmer per word
+      setTimeout(() => {
+        // Create word spans with staggered glow
+        const words = [{ text: 'Kishore', cls: 'hw-k' }, { text: '& ', cls: 'hw-amp' }, { text: 'Harini', cls: 'hw-h', em: true }];
+        const style = document.createElement('style');
+        style.textContent = `
+      @keyframes wordGlow{0%{text-shadow:none}50%{text-shadow:0 0 60px var(--ac)}100%{text-shadow:none}}
+      .hw-k,.hw-h,.hw-amp{display:inline;animation:wordGlow 4s ease-in-out forwards}
+      .hw-k{animation-delay:0s}.hw-amp{animation-delay:.3s}.hw-h{animation-delay:.6s}
+    `;
+        document.head.appendChild(style);
+        el.innerHTML = `<span class="hw-k">Kishore</span><br><span class="hw-amp">&amp; </span><em class="hw-h">Harini</em>`;
+      }, 1600);
+    })();
+
+    // 7. OPENING CHAPTER CARD (Hero) —————————————————————
+    (function () {
+      if (!ccCard) return;
+      // Show an opening title card before letterbox opens
+      document.getElementById('cc-eyebrow').textContent = 'A Love Story';
+      document.getElementById('cc-title').textContent = 'Kishore & Harini';
+      document.getElementById('cc-date').textContent = 'November 2023 → April 2026';
+      ccCard.classList.add('show');
+      // Fade out right as letterbox opens — then the hero reveals
+      setTimeout(() => ccCard.classList.remove('show'), 1900);
+      // Pre-mark s3c etc so the opening card doesn't re-trigger
+      // (chaptersDoneSt is populated when sections are scrolled to)
+    })();
+
+    const launchScreen = document.getElementById("launch-screen");
+
+    function startExperience() {
+      // play audio
+      bgm.play().catch(e => console.log("Audio blocked:", e));
+
+      // hide launch screen smoothly
+      launchScreen.classList.add("hidden");
+    }
+
+    // IMPORTANT: mobile needs touchstart
+    launchScreen.addEventListener("touchstart", startExperience, { once: true });
+    launchScreen.addEventListener("click", startExperience, { once: true });
+
+
+  </script>
+</body>
+
+</html>
